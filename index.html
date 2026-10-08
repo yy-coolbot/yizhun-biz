@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="壹准（绿怡科技旗下）：四大业务板块——壹准保卖、壹准拍机、壹准验机、壹准bot速收。用壹准AI生态平台，把二手生意重做一遍。">
-<meta property="og:title" content="壹准 · 用壹准AI生态平台，把二手生意重做一遍">
+<meta property="og:title" content="壹准项目介绍">
 <meta property="og:description" content="壹准保卖 · 壹准拍机 · 壹准bot速收流量主合作 | 绿怡科技旗下">
 <meta property="og:type" content="website">
 <!-- og:image 待补充：微信转发卡片缩略图占位 -->
-<title>壹准 · 用壹准AI生态平台，把二手生意重做一遍</title>
+<title>壹准项目介绍</title>
 <style>
 /* ============================================================
    壹准拓客页 v0.2.0 · 设计系统
@@ -1969,7 +1969,7 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
   <div class="wrap">
     <div class="foot-bottom" style="margin-top:0;border-top:0;padding-top:0">
       <span>© 2026 绿怡科技 · 壹准</span>
-      <span id="ver-tag">demo v0.11.20</span>
+      <span id="ver-tag">demo v0.11.21</span>
     </div>
   </div>
 </footer>
@@ -2002,6 +2002,8 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
 /* ============ 路由：1 个网址 · 4 种形态 ============ */
 var BIZS = ['baomai','paiji']; /* sushou 已隐藏（v0.11.18）：?biz=sushou 回退聚合页，子页保留但无任何入口 */
 var BIZ_NAME = {baomai:'壹准保卖', paiji:'壹准拍机'};
+var BIZ_TITLE = {baomai:'壹准保卖介绍', paiji:'壹准拍机介绍'}; /* 浏览器标签页标题（v0.11.21 钦定） */
+var HOME_TITLE = '壹准项目介绍';
 var BIZ_VIEW = {baomai:'view-baomai', paiji:'view-paiji'};
 var JOIN_ANCHOR = {home:'#join', baomai:'#bm-join', paiji:'#pj-join'};
 var params = new URLSearchParams(location.search);
@@ -2081,7 +2083,7 @@ if (isSingle){
   view.hidden = false;
   document.getElementById('nav-biz-badge').hidden = false;
   document.getElementById('nav-biz-badge').textContent = BIZ_NAME[biz];
-  document.title = BIZ_NAME[biz] + ' · 壹准（绿怡科技旗下）';
+  document.title = BIZ_TITLE[biz];
   fixNavCTA(biz);
   setupReveal(view);
   /* 直接从子页面进的：顶栏不显示，跟首页一致（v0.11.16），nav 保持 HTML 默认 hidden */
@@ -2102,7 +2104,7 @@ function openBiz(b){
   document.getElementById('view-home').hidden = true;
   var v = document.getElementById(BIZ_VIEW[b]);
   v.hidden = false;
-  document.title = BIZ_NAME[b] + ' · 壹准（绿怡科技旗下）';
+  document.title = BIZ_TITLE[b];
   fixNavCTA(b);
   /* 从首页点进子页：唤出顶栏，只留「返回首页」（v0.11.15） */
   if (navBar){ navBar.hidden = false; navBar.classList.add('home-entry'); }
@@ -2117,7 +2119,7 @@ function goHome(e){
   document.getElementById(BIZ_VIEW[currentSub]).hidden = true;
   document.getElementById('view-home').hidden = false;
   currentSub = null;
-  document.title = '壹准 · 用壹准AI生态平台，把二手生意重做一遍';
+  document.title = HOME_TITLE;
   fixNavCTA('home');
   /* 回首页：顶栏收回 */
   if (navBar){ navBar.hidden = true; navBar.classList.remove('home-entry'); }
