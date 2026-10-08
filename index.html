@@ -886,7 +886,7 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
           <div class="bb-info">
             <span class="biz-pill"><img src="assets/logo-bm.png" alt="壹准保卖" loading="lazy">本地B端回收服务</span>
             <h3 class="bb-title">壹准保卖<br><em>本地B端最优出货渠道。</em></h3>
-            <p class="bb-desc">B端商家批量下单后同城物流半小时送到壹准城市中心，由机器人标准化验机出《“壹准官方验”报告》，全球二手商的AI买手即时竞拍卖出最高价。同城服务全程透明，快速回款。</p>
+            <p class="bb-desc">B端商家批量下单后同城物流半小时送到壹准二手机中心，由机器人标准化验机出《“壹准官方验”报告》，全球二手商的AI买手即时竞拍卖出最高价。同城服务全程透明，快速回款。</p>
             <a class="go" href="#" onclick="openBiz('baomai');return false;">了解壹准保卖 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
           <div class="bb-anim" aria-hidden="true">
@@ -934,7 +934,7 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
           <div class="bb-info">
             <span class="biz-pill"><img src="assets/logo-ss.png" alt="壹准bot速收" loading="lazy">C端回收服务</span>
             <h3 class="bb-title">壹准bot速收<br><em>C端线上回收服务基础设施。</em></h3>
-            <p class="bb-desc">壹准Bot速收是一个颠覆性创新的回收服务，本地化闪购式回收体验。消费者下单后同城物流半小时送到壹准城市中心，机器人标准化验机迅速出《“壹准官方验”报告》，全球二手商的AI买手即时竞拍卖出最高价，同意回收秒到账，全程透明高效。因为全程极致降本增效和去中间商，所以能给出最高的回收价格。</p>
+            <p class="bb-desc">壹准Bot速收是一个颠覆性创新的回收服务，本地化闪购式回收体验。消费者下单后同城物流半小时送到壹准二手机中心，机器人标准化验机迅速出《“壹准官方验”报告》，全球二手商的AI买手即时竞拍卖出最高价，同意回收秒到账，全程透明高效。因为全程极致降本增效和去中间商，所以能给出最高的回收价格。</p>
           </div>
           <div class="bb-anim" aria-hidden="true">
             <div class="hfsteps" data-flow>
@@ -1072,8 +1072,8 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
       </div>
       <div class="card an-row reveal">
         <div class="an-info">
-          <p>广州绿怡科技公司是中国最领先的二手流通行业AI质检服务平台，智能质检机器人产品全球领先，是苹果大中华区、中国电信、中国移动等以旧换新业务的核心服务商。</p>
-          <p>正着力搭建全国最大的C2B/B2B二手手机交易平台，链接全国所有区县头部回收商、B端商户、国际采购商，贯通回收、流通、销售全链条。引领企业集群，构建万亿赛道产业新生态。</p>
+          <p>广州绿怡科技公司（简称“绿怡科技”）是中国最领先的二手流通行业AI质检服务平台，智能质检机器人产品全球领先，是苹果大中华区、中国电信、中国移动等以旧换新业务的核心服务商。</p>
+          <p>绿怡致力于搭建全国最大的C2B/B2B二手手机交易平台，链接全国所有区县头部回收商、B端商户、国际采购商，贯通回收、流通、销售全链条。引领企业集群，构建万亿赛道产业新生态。</p>
         </div>
         <figure class="an-fig2" aria-hidden="true">
           <img src="assets/an-company.png" alt="绿怡科技智能质检产品矩阵" loading="lazy">
@@ -1300,7 +1300,7 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
         <div class="card adv-card reveal">
           <span class="adv-tag">02 高价</span>
           <h3>国内国外多渠道即时竞价销售</h3>
-          <p>按你的期望价智能动态定价，全球回收商的 AI 买手即时竞价！——直通全球，卖高价！</p>
+          <p>按你的期望价智能动态定价，全球二手商即时竞价！——直通全球，卖高价！</p>
           <figure class="adv-img img-contain"><img src="assets/bm-globe.png" alt="全球买家网络：AI 买手跨区域即时竞价" loading="lazy" width="1280" height="789"></figure>
         </div>
         <!-- 03 透明 -->
@@ -1969,7 +1969,7 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
   <div class="wrap">
     <div class="foot-bottom" style="margin-top:0;border-top:0;padding-top:0">
       <span>© 2026 绿怡科技 · 壹准</span>
-      <span id="ver-tag">demo v0.11.18</span>
+      <span id="ver-tag">demo v0.11.19</span>
     </div>
   </div>
 </footer>
@@ -2123,6 +2123,26 @@ function goHome(e){
   if (navHomeBtn) navHomeBtn.hidden = true;
   window.scrollTo({top:0, behavior:'auto'});
 }
+
+/* ============ 痛点卡解法块同行等高对齐（v0.11.19：虚线+「解法」标签顶对齐） ============ */
+var fixRaf = null;
+function equalizeFix(){
+  fixRaf = null;
+  document.querySelectorAll('.pain-grid').forEach(function(g){
+    var cards = g.querySelectorAll('.pain-card');
+    for (var i = 0; i + 1 < cards.length; i += 2){
+      var fa = cards[i].querySelector('.fix'), fb = cards[i+1].querySelector('.fix');
+      if (!fa || !fb) continue;
+      fa.style.minHeight = ''; fb.style.minHeight = '';
+      var h = Math.max(fa.offsetHeight, fb.offsetHeight);
+      fa.style.minHeight = h + 'px'; fb.style.minHeight = h + 'px';
+    }
+  });
+}
+window.addEventListener('resize', function(){ if (!fixRaf) fixRaf = requestAnimationFrame(equalizeFix); });
+window.addEventListener('load', equalizeFix);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(equalizeFix);
+equalizeFix();
 
 /* ============ 阅读进度条 + 返回顶部 ============ */
 var progressBar = document.getElementById('progress');
