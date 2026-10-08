@@ -1,0 +1,9 @@
+# 迭代截图与测试产物（不进仓库）
+shots/
+_*.png
+_v0*.png
+*.log
+
+# 系统文件
+Thumbs.db
+.DS_Store

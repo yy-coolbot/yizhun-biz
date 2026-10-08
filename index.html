@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-mode="home">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="壹准（绿怡科技旗下）：四大业务板块——壹准保卖、壹准拍机、壹准验机、壹准bot速收。用壹准AI生态平台，把二手生意重做一遍。">
+<meta property="og:title" content="壹准 · 用壹准AI生态平台，把二手生意重做一遍">
+<meta property="og:description" content="壹准保卖 · 壹准拍机 · 壹准bot速收流量主合作 | 绿怡科技旗下">
+<meta property="og:type" content="website">
+<!-- og:image 待补充：微信转发卡片缩略图占位 -->
+<title>壹准 · 用壹准AI生态平台，把二手生意重做一遍</title>
+<style>
+/* ============================================================
+   壹准拓客页 v0.2.0 · 设计系统
+   暗色 / indigo 主色 / 绿仅 CTA / 编辑式排版 / 克制动效
+============================================================ */
+:root{
+  --bg:#0a0e1e;
+  --bg-2:#0e1428;
+  --card:rgba(255,255,255,.04);
+  --card-hover:rgba(255,255,255,.065);
+  --border:rgba(255,255,255,.08);
+  --border-strong:rgba(255,255,255,.18);
+  --txt:#f0f2ff;
+  --muted:#a3abc7;
+  --faint:#6d7699;
+  --primary:#006FFF;
+  --primary-soft:rgba(0,111,255,.14);
+  --primary-line:rgba(0,111,255,.38);
+  --green:#10b981;
+  --green-soft:rgba(16,185,129,.13);
+  --radius:12px;
+  --maxw:1080px;
+  --mono:ui-monospace,'SF Mono','Cascadia Mono',Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{
+  font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;
+  background:var(--bg);color:var(--txt);
+  line-height:1.75;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  /* 细网格底纹：压住"AI 渐变光斑"感的替代方案 */
+  background-image:
+    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:56px 56px;
+}
+/* 噪点质感层 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+section{padding:64px 0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:6px}
+::selection{background:rgba(0,111,255,.4)}
+
+/* ============ 阅读进度条 ============ */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:90;
+  background:var(--primary);transition:width .1s linear}
+
+/* ============ 顶栏（极简：logo + CTA，去网站式菜单） ============ */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:rgba(10,14,30,.78);border-bottom:1px solid var(--border)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:12px 22px;display:flex;align-items:center;gap:14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:1px}
+.logo-mark{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#006FFF,#004BB8);
+  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex:none}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.nav-biz-badge{font-size:12.5px;color:var(--muted);border:1px solid var(--border);
+  padding:4px 12px;border-radius:999px;background:var(--card)}
+.nav-cta{padding:8px 18px;border-radius:999px;background:var(--green);color:#04231a;font-weight:600;font-size:14px;
+  transition:.2s;min-height:36px;display:inline-flex;align-items:center}
+.nav-cta:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.nav-home{padding:8px 18px;border-radius:999px;border:1px solid var(--primary-line);background:var(--primary-soft);
+  color:#9cc8ff;font-weight:600;font-size:13.5px;min-height:36px;display:inline-flex;align-items:center;transition:.2s;margin-right:auto}
+.nav-home:hover{border-color:var(--primary);color:#fff}
+.nav-home[hidden]{display:none}
+.nav[hidden]{display:none}
+/* 从首页点进子页：顶栏只留「返回首页」，Logo/徽标/合作咨询全藏 */
+.nav.home-entry .logo,.nav.home-entry .nav-cta{display:none}
+
+/* 返回顶部（所有页面，下滑出现） */
+.btop{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:60;
+  width:44px;height:44px;border-radius:50%;background:var(--card);border:1px solid var(--border-strong);
+  color:#9cc8ff;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;pointer-events:none;transform:translateY(10px);transition:.25s}
+.btop.show{opacity:1;pointer-events:auto;transform:none}
+.btop:hover{border-color:var(--primary);color:#fff}
+.btop svg{width:19px;height:19px}
+
+/* ============ Hero ============ */
+.hero{padding:76px 0 44px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;top:-140px;left:50%;transform:translateX(-50%);
+  width:640px;height:320px;background:radial-gradient(ellipse,rgba(0,111,255,.18),transparent 70%);
+  filter:blur(10px);pointer-events:none}
+.hero-in{max-width:820px;margin:0 auto;text-align:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#9cc8ff;
+  background:var(--primary-soft);border:1px solid var(--primary-line);padding:7px 18px;border-radius:999px;margin-bottom:26px}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--primary);flex:none}
+.hero-badge .badge-logo{height:18px;width:auto;display:block}
+h1{font-size:clamp(32px,6.2vw,54px);font-weight:800;line-height:1.28;letter-spacing:.02em}
+h1 em{font-style:normal;color:#7ab5ff}
+.hero-sub{max-width:600px;margin:22px auto 0;color:var(--muted);font-size:clamp(15px,2vw,16.5px)}
+.hero-btns{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 30px;border-radius:999px;
+  font-size:15px;font-weight:600;transition:.2s;min-height:48px}
+.btn-green{background:var(--green);color:#04231a;box-shadow:0 0 0 0 rgba(16,185,129,.35);animation:pulse 2.6s infinite}
+.btn-green:hover{filter:brightness(1.1);transform:translateY(-2px)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,111,255,.28)}70%{box-shadow:0 0 0 14px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+.btn-ghost{border:1px solid var(--border-strong);color:var(--txt)}
+.btn-ghost:hover{background:var(--card);border-color:var(--primary-line)}
+.hero-note{margin-top:16px;font-size:12px;color:var(--faint)}
+
+/* Hero 入场动效 */
+.h-anim{opacity:0;transform:translateY(18px);animation:hup .7s cubic-bezier(.16,1,.3,1) forwards}
+.h-anim.d1{animation-delay:.08s}.h-anim.d2{animation-delay:.18s}.h-anim.d3{animation-delay:.3s}.h-anim.d4{animation-delay:.42s}
+@keyframes hup{to{opacity:1;transform:none}}
+
+/* ============ 编辑式 section 标题（左对齐 + 序号 + 细线） ============ */
+.sec-head{max-width:720px;margin-bottom:42px}
+.sec-idx{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.sec-idx .no{font-family:var(--mono);font-size:13px;color:var(--primary);font-weight:600;letter-spacing:.1em}
+.sec-idx .line{flex:none;width:36px;height:1px;background:var(--primary-line)}
+.sec-idx .cat{font-size:11.5px;letter-spacing:.28em;color:var(--faint);text-transform:uppercase}
+h2{font-size:clamp(23px,4vw,32px);font-weight:800;line-height:1.4;letter-spacing:.01em}
+h2 em{font-style:normal;color:#7ab5ff}
+#pj-pain h2 em,#pj-ease h2 em{color:#fff}
+.sec-desc{color:var(--muted);margin-top:12px;font-size:15px;max-width:560px}
+
+/* ============ 卡片体系（去图标芯片，用序号与内容说话） ============ */
+.grid{display:grid;gap:14px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:26px 24px;transition:transform .25s,border-color .25s,background .25s;position:relative;overflow:hidden}
+.card:hover{background:var(--card-hover);border-color:var(--border-strong);transform:translateY(-3px)}
+.card h3{font-size:16.5px;font-weight:700;margin-bottom:8px}
+.card p{font-size:14px;color:var(--muted)}
+.big-no{font-family:var(--mono);font-size:15px;color:var(--primary);opacity:.9;margin-bottom:14px;font-weight:600}
+.card .foot-note-line{margin-top:14px;padding-top:12px;border-top:1px dashed var(--border);font-size:12.5px;color:var(--faint)}
+.tag{display:inline-block;font-size:12px;color:#9cc8ff;background:var(--primary-soft);border:1px solid var(--primary-line);
+  padding:2px 10px;border-radius:999px;margin:10px 6px 0 0}
+
+/* ============ 首页 v0.11.0：对象感/困局/旅程动画/金句/解法 ============ */
+/* ============ 首页 v0.11.1：hero三胶囊 + 四大业务板块 ============ */
+.hero-chips{display:flex;gap:10px;justify-content:center;align-items:center;margin:26px auto 0;flex-wrap:wrap;max-width:720px}
+.hchip{font-size:13.5px;color:#9cc8ff;background:var(--primary-soft);border:1px solid var(--primary-line);
+  padding:7px 16px;border-radius:999px;white-space:nowrap}
+.hplus{color:var(--faint);font-weight:600}
+/* ---- 四大业务横带（左信息 + 右流程动画） ---- */
+.biz-bands{display:flex;flex-direction:column;gap:18px}
+.biz-band{display:flex;align-items:center;gap:34px;padding:22px 26px}
+.bb-info{flex:none;width:308px;display:flex;flex-direction:column;align-items:flex-start}
+.biz-pill{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;color:#cfe0ff;background:linear-gradient(160deg,rgba(0,111,255,.22),rgba(0,111,255,.08));
+  border:1px solid rgba(0,111,255,.42);border-radius:999px;padding:6px 14px 6px 10px;margin-bottom:13px}
+.biz-pill img{height:15px;width:auto;max-width:104px;object-fit:contain;display:block}
+.bb-title{font-size:19px;font-weight:700;line-height:1.42;margin-bottom:9px}
+.bb-title em{font-style:normal;color:#7ab5ff}
+.bb-desc{font-size:12.5px;color:var(--muted);line-height:1.72}
+.bb-info .go{margin-top:14px}
+.bb-anim{flex:1;display:flex;align-items:center;justify-content:center;min-width:0}
+/* 流程步进动画 v3：时序对齐保卖页 fd-* 基准——未亮=暗灰无✅，到点亮起弹✅，已过的步保持常亮(.done)，全亮后同熄循环 */
+.hfsteps{display:flex;flex-direction:column;gap:6px;width:100%;max-width:700px}
+.fs-row{display:flex;align-items:flex-start}
+.fs-row.rev{flex-direction:row-reverse}
+.fs-turn{display:flex;justify-content:flex-end;align-items:center;padding-right:52px;height:26px}
+.fs-turn .tv{position:relative;width:1.5px;height:100%;margin-right:5px;
+  background:repeating-linear-gradient(180deg,rgba(0,111,255,.45) 0 5px,transparent 5px 9px);
+  background-size:100% 9px;animation:arrflowv 1.1s linear infinite;opacity:.55;transition:opacity .4s}
+.fs-turn .tv::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);
+  border-top:5.5px solid rgba(122,181,255,.65);border-left:3.5px solid transparent;border-right:3.5px solid transparent}
+.fs-turn.lit .tv{opacity:1;filter:drop-shadow(0 0 5px rgba(0,111,255,.5))}
+@keyframes arrflowv{to{background-position:0 9px}}
+.hfstep{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;flex:none;width:112px}
+.fs-ic{position:relative;width:46px;height:46px;border-radius:13px;border:1px solid var(--border);
+  background:rgba(0,111,255,.05);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .45s,background .45s,box-shadow .45s}
+.fs-ic .fs-g{width:22px;height:22px;stroke:#67718f;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:stroke .45s}
+.fs-check{position:absolute;top:-7px;right:-7px;width:17px;height:17px;border-radius:50%;
+  background:var(--primary);border:2px solid #0d1526;padding:2.5px;
+  box-shadow:0 2px 8px rgba(0,111,255,.45);
+  opacity:0;transform:scale(.4);transition:opacity .3s,transform .3s cubic-bezier(.34,1.56,.64,1)}
+.fs-check path{stroke:#fff;fill:none;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round}
+.hfstep.on .fs-ic,.hfstep.done .fs-ic{border-color:rgba(0,111,255,.55);
+  background:linear-gradient(160deg,rgba(0,111,255,.22),rgba(0,111,255,.08));
+  box-shadow:0 0 0 4px rgba(0,111,255,.12),0 0 20px rgba(0,111,255,.3)}
+.hfstep.on .fs-g,.hfstep.done .fs-g{stroke:#7ab5ff}
+.hfstep.on .fs-check,.hfstep.done .fs-check{opacity:1;transform:scale(1)}
+.fs-lb{font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5;transition:color .45s}
+.hfstep.on .fs-lb,.hfstep.done .fs-lb{color:#eaf2ff;font-weight:600}
+/* 步骤间箭头：未到=暗虚线，点亮=亮虚线流动；中途标签随箭头点亮浮现 */
+.fs-arr{flex:1;min-width:30px;height:1.5px;margin-top:23px;position:relative;
+  background:repeating-linear-gradient(90deg,rgba(122,181,255,.18) 0 7px,transparent 7px 13px);
+  background-size:13px 100%;transition:background .4s}
+.fs-arr.lit{background:repeating-linear-gradient(90deg,rgba(0,111,255,.55) 0 7px,transparent 7px 13px);
+  background-size:13px 100%;animation:arrflow 1.1s linear infinite}
+.fs-row.rev .fs-arr{transform:scaleX(-1)}
+@keyframes arrflow{to{background-position:13px 0}}
+.fs-arr::after{content:'';position:absolute;right:-1px;top:-2.75px;
+  border-left:5.5px solid rgba(122,181,255,.25);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;transition:border-color .4s}
+.fs-arr.lit::after{border-left-color:rgba(122,181,255,.85)}
+.fs-arr.lit{filter:drop-shadow(0 0 5px rgba(0,111,255,.45))}
+/* 中途标签（最快半小时）：骑在箭头上方，流程到达才浮现 */
+.fs-mid{position:absolute;bottom:9px;left:50%;transform:translateX(-50%) translateY(4px);white-space:nowrap;
+  font-size:10.5px;color:#9cc8ff;background:rgba(11,22,46,.92);border:1px dashed rgba(0,111,255,.55);
+  padding:2.5px 9px;border-radius:999px;
+  opacity:0;transition:opacity .35s,transform .35s;pointer-events:none}
+.fs-arr.lit .fs-mid{opacity:1;transform:translateX(-50%) translateY(0)}
+/* 步骤角标（官方验报告 / 7×24h）：流程到达才浮现 */
+.fs-badge{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(5px);
+  white-space:nowrap;font-size:11px;color:#cfe4ff;letter-spacing:.02em;
+  background:linear-gradient(160deg,rgba(0,111,255,.32),rgba(0,111,255,.12));
+  border:1px solid rgba(0,111,255,.52);padding:3px 10px;border-radius:999px;
+  box-shadow:0 4px 14px rgba(0,111,255,.22);pointer-events:none;
+  opacity:0;transition:opacity .35s,transform .35s,color .35s,border-color .35s}
+.hfstep.on .fs-badge,.hfstep.done .fs-badge{opacity:1;transform:translateX(-50%) translateY(0);
+  color:#fff;border-color:var(--primary);box-shadow:0 4px 18px rgba(0,111,255,.45)}
+.hfsteps{padding-top:26px}
+/* 验机动画 v5：拍机叙事——左横排3台手机逐台进机器(队列右移补位) → 机器脉冲 → 右侧弹质检报告+绿✓再消失（9s 三轮循环） */
+.yj-flow{position:relative;display:flex;align-items:center;justify-content:center;gap:20px;width:100%;max-width:560px;padding:8px 0}
+.yj-queue{position:relative;flex:none;width:144px;height:84px}
+.yj-ph{position:absolute;left:0;top:50%;width:40px;height:70px;margin-top:-35px;color:#7ab5ff;--slot:52px;--exin:76px}
+.yj-ph svg{display:block;width:100%;height:100%}
+.yj1,.yj2,.yj3{animation:yjph 9s linear infinite}
+.yj2{animation-delay:-3s}
+.yj3{animation-delay:-6s}
+@keyframes yjph{
+  0%{transform:translateX(0) scale(1);opacity:0;filter:none}
+  4%,30%{transform:translateX(0) scale(1);opacity:1;filter:drop-shadow(0 0 8px rgba(0,111,255,.4))}
+  35%,63%{transform:translateX(var(--slot)) scale(1);opacity:1;filter:drop-shadow(0 0 8px rgba(0,111,255,.4))}
+  68%,96%{transform:translateX(calc(var(--slot)*2)) scale(1);opacity:1;filter:drop-shadow(0 0 8px rgba(0,111,255,.4))}
+  100%{transform:translateX(calc(var(--slot)*2 + var(--exin))) scale(.5);opacity:0;filter:drop-shadow(0 0 12px rgba(0,111,255,.75))}}
+.yj-machine{position:relative;flex:none;display:flex;align-items:center}
+.yj-machine::before{content:'';position:absolute;left:-8px;top:26%;width:12px;height:48%;
+  background:linear-gradient(90deg,transparent,rgba(0,111,255,.4),transparent);
+  filter:blur(3px);animation:yjdoor 9s linear infinite}
+@keyframes yjdoor{0%,9%{opacity:.8}14%,34%{opacity:.12}39%,43%{opacity:.8}48%,66%{opacity:.12}72%,76%{opacity:.8}81%,94%{opacity:.12}100%{opacity:.8}}
+.yj-machine img{display:block;height:200px;width:auto;animation:yjglow 9s linear infinite}
+@keyframes yjglow{
+  0%,8%{filter:drop-shadow(0 14px 28px rgba(0,0,0,.35)) drop-shadow(0 0 26px rgba(0,111,255,.55)) brightness(1.14)}
+  14%,33%{filter:drop-shadow(0 14px 28px rgba(0,0,0,.35))}
+  39%,42%{filter:drop-shadow(0 14px 28px rgba(0,0,0,.35)) drop-shadow(0 0 26px rgba(0,111,255,.55)) brightness(1.14)}
+  48%,66%{filter:drop-shadow(0 14px 28px rgba(0,0,0,.35))}
+  72%,75%{filter:drop-shadow(0 14px 28px rgba(0,0,0,.35)) drop-shadow(0 0 26px rgba(0,111,255,.55)) brightness(1.14)}
+  81%,94%{filter:drop-shadow(0 14px 28px rgba(0,0,0,.35))}
+  100%{filter:drop-shadow(0 14px 28px rgba(0,0,0,.35)) drop-shadow(0 0 26px rgba(0,111,255,.55)) brightness(1.14)}}
+.yj-reps{position:relative;flex:none;width:100px;height:140px}
+.yj-rep{position:absolute;top:50%;left:50%;width:64px;margin:-66px 0 0 -32px;opacity:0;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,.45))}
+.yj-rep img{display:block;width:100%;border-radius:8px;box-shadow:0 0 0 1px rgba(122,181,255,.3)}
+.yj-rep .stk{position:absolute;top:-8px;right:-9px;width:22px;height:22px;border-radius:50%;
+  background:#22c55e;border:2px solid #0d1526;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(.4)}
+.yj-rep .stk svg{width:12px;height:12px;stroke:#fff;stroke-width:3.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.yjr1,.yjr2,.yjr3{animation:yjrep 9s linear infinite}
+.yjr1{animation-delay:-3s}
+.yjr2{animation-delay:-6s}
+.yjr1 .stk,.yjr2 .stk,.yjr3 .stk{animation:yjstk 9s linear infinite}
+.yjr1 .stk{animation-delay:-3s}
+.yjr2 .stk{animation-delay:-6s}
+@keyframes yjrep{
+  0%,42%{opacity:0;transform:rotate(-2deg) translateY(14px) scale(.85)}
+  47%,57%{opacity:1;transform:rotate(-2deg) translateY(0) scale(1)}
+  62%,100%{opacity:0;transform:rotate(-2deg) translateY(14px) scale(.85)}}
+@keyframes yjstk{
+  0%,50%{opacity:0;transform:scale(.4)}
+  54%,57%{opacity:1;transform:scale(1)}
+  62%,100%{opacity:0;transform:scale(.4)}}
+.why-card{border-top:none}
+#why .why-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,rgba(248,113,113,.55),transparent 70%);opacity:.5}
+
+/* 模块总结条：收束困局 + 引出解法（承上启下） */
+.why-sum{margin-top:36px;border:1px solid var(--primary-line);border-radius:14px;
+  background:var(--primary-soft);padding:26px 30px;text-align:center}
+.why-sum p{font-size:15.5px;line-height:1.95;color:var(--muted);max-width:880px;margin:0 auto}
+.why-sum em{font-style:normal;color:#7ab5ff;font-weight:600}
+
+/* 解法区：三模块通栏卡，左内容右图 */
+.h2-pre{font-size:.72em;font-weight:700;color:var(--muted);letter-spacing:.01em}
+.an-stack{display:flex;flex-direction:column;gap:18px}
+.an-row{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;padding:26px 30px}
+.an-info{min-width:0}
+.an-row h3{font-size:19px;margin-bottom:10px}
+.an-row p{font-size:14px;line-height:1.85}
+.an-item .an-go,.an-row .an-go{margin-top:14px;display:inline-flex;align-items:center;gap:6px;
+  color:#7ab5ff;font-size:13.5px;font-weight:600;text-align:left;padding:0}
+.an-item .an-go:hover,.an-row .an-go:hover{color:#9cc8ff}
+.an-fig2{margin:0;min-width:0;text-align:center}
+.an-fig2 img{display:block;width:100%;height:190px;object-fit:contain;margin:0 auto;
+  filter:drop-shadow(0 18px 40px rgba(0,111,255,.18))}
+.an-fig2 img.fill{object-fit:cover;border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.35),0 0 0 1px rgba(122,181,255,.18)}
+/* 04 关于绿怡科技 */
+#about .an-info p{font-size:14.5px;line-height:1.95;color:var(--muted)}
+#about .an-info p + p{margin-top:14px}
+#about .an-fig2 img{height:240px}
+
+/* ============ 痛点区（引用体排版） ============ */
+.pain-card{display:flex;flex-direction:column;gap:10px}
+.pain-quote{font-size:clamp(17px,2.4vw,19.5px);font-weight:700;line-height:1.5;letter-spacing:.01em}
+.pain-quote::before{content:"「";color:var(--faint);margin-right:2px}
+.pain-quote::after{content:"」";color:var(--faint);margin-left:2px}
+.pain-desc{font-size:13.5px;color:var(--muted)}
+.pain-answer{margin-top:auto;padding-top:12px;border-top:1px dashed var(--border);
+  display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#8ee7c8}
+.pain-answer svg{width:15px;height:15px;flex:none;margin-top:3px}
+.pain-answer b{color:#7ab5ff;font-weight:600}
+/* 痛点区与常规卡的视觉区分：左侧细红线？不，用 indigo 顶线 */
+.pain-card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--primary),transparent 70%);opacity:.6}
+.pain-lead{max-width:640px;font-size:clamp(16px,2.4vw,19px);color:var(--txt);font-weight:600;
+  line-height:1.9;margin-bottom:36px}
+.pain-lead em{font-style:normal;color:#7ab5ff;border-bottom:2px solid var(--primary-line)}
+
+/* ============ 优势区（主卡+副卡 bento） ============ */
+.adv-hero{grid-column:span 2;background:linear-gradient(150deg,rgba(0,111,255,.14),rgba(0,111,255,.04));
+  border-color:var(--primary-line)}
+.adv-hero h3{font-size:20px}
+.adv-hero p{font-size:14.5px}
+.metric-row{display:flex;gap:22px;margin-top:18px;flex-wrap:wrap}
+.metric b{font-family:var(--mono);font-size:24px;font-weight:700;color:#c7cdff;display:block;line-height:1.2}
+.metric span{font-size:12px;color:var(--faint)}
+
+/* ============ 流程时间线 ============ */
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;counter-reset:fs}
+.flow.f5{grid-template-columns:repeat(5,1fr)}
+.flow.f4{grid-template-columns:repeat(4,1fr)}
+.fstep{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px 13px;position:relative;transition:.25s}
+.fstep:hover{border-color:var(--primary-line);background:var(--card-hover)}
+.fstep .no{font-family:var(--mono);font-size:12px;color:var(--primary);font-weight:700;display:block;margin-bottom:8px}
+.fstep b{display:block;font-size:14.5px;margin-bottom:3px;line-height:1.4}
+.fstep span{font-size:12px;color:var(--faint);line-height:1.6;display:block}
+.fstep::after{content:"";position:absolute;right:-6px;top:50%;width:6px;height:6px;
+  border-top:1.5px solid var(--faint);border-right:1.5px solid var(--faint);
+  transform:translateY(-50%) rotate(45deg);opacity:.7}
+.fstep:last-child::after{display:none}
+
+/* ============ 规则区（列表条目式，区别于卡片） ============ */
+.rules{border:1px solid var(--border);border-radius:14px;background:var(--card);overflow:hidden}
+.rule-item{display:grid;grid-template-columns:190px 1fr;gap:18px;padding:22px 26px;
+  border-bottom:1px solid var(--border);transition:background .2s}
+.rule-item:last-child{border-bottom:none}
+.rule-item:hover{background:var(--card-hover)}
+.rule-item .k{font-size:14.5px;font-weight:700;color:#c7cdff}
+.rule-item .v{font-size:13.5px;color:var(--muted)}
+.rule-item .v .ph-inline{color:#7ab5ff;border-bottom:1px dashed var(--primary-line)}
+.rules-tail{padding:14px 26px;font-size:12px;color:var(--faint);background:rgba(255,255,255,.015)}
+
+/* ============ 占位块 ============ */
+.ph{border:1.5px dashed rgba(0,111,255,.45);border-radius:var(--radius);background:rgba(0,111,255,.05);
+  color:#7ab5ff;font-size:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:20px;gap:8px}
+.ph .ph-tag{font-size:11px;letter-spacing:1px;background:var(--primary-soft);border:1px solid var(--primary-line);
+  padding:2px 10px;border-radius:999px;color:#9cc8ff}
+.qr-box{width:148px;height:148px;border-radius:var(--radius);background:#fff;padding:10px;flex:none;
+  box-shadow:0 0 0 6px rgba(255,255,255,.04)}
+.qr-box svg{width:100%;height:100%;display:block}
+.qr-box img{width:100%;height:100%;display:block;object-fit:cover}
+/* 双码并排（首页合作卡，v0.11.14 瘦身：去标题+缩码） */
+.join-card.duo{grid-template-columns:1fr;text-align:center;padding:26px 28px}
+.join-card.duo .qr-box{width:118px;height:118px;padding:8px}
+.qr-duo{display:flex;gap:48px;justify-content:center;flex-wrap:wrap}
+.qr-item{display:flex;flex-direction:column;align-items:center;gap:11px}
+.qr-item b{font-size:16.5px}
+.qr-item span{font-size:13px;color:var(--muted)}
+.join-card{display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;
+  background:linear-gradient(160deg,rgba(0,111,255,.12),rgba(16,185,129,.04));border:1px solid var(--primary-line);
+  border-radius:16px;padding:38px}
+.join-card h3{font-size:clamp(20px,3vw,25px);font-weight:800;margin-bottom:8px}
+.join-card .sub{color:var(--muted);font-size:14px;margin-bottom:16px}
+.contact-rows{display:flex;flex-direction:column;gap:10px;font-size:14px}
+.contact-rows .row{display:flex;align-items:center;gap:10px;color:var(--muted)}
+.contact-rows .row svg{width:16px;height:16px;color:var(--primary);flex:none}
+.risk-note{margin-top:22px;font-size:12px;color:var(--faint);text-align:center;line-height:1.9}
+
+/* ============ 聚合页业务入口（横带 .go 绿色按钮） ============ */
+.bb-info .go{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:14px;
+  padding:11px 24px;border-radius:999px;font-size:14px;font-weight:700;
+  background:var(--green);color:#04231a;box-shadow:0 4px 16px rgba(16,185,129,.28);transition:.2s}
+.bb-info .go svg{width:15px;height:15px}
+.bb-info .go:hover{filter:brightness(1.1);transform:translateY(-2px)}
+.bb-info .go:hover svg{transform:translateX(3px)}
+
+/* ============ 页脚（仅一行版权+版本号细条） ============ */
+footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
+.foot-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--faint)}
+.btn-sm{padding:9px 20px;font-size:13.5px;min-height:40px}
+
+/* ============ 拓客助手 ============ */
+.scout-btn{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:60;
+  width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#004BB8);
+  color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,111,255,.4);transition:.2s}
+.scout-btn:hover{transform:scale(1.07)}
+.scout-btn[hidden]{display:none}
+.scout-btn svg{width:23px;height:23px}
+.modal-mask{position:fixed;inset:0;z-index:70;background:rgba(4,7,18,.62);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:20px}
+.modal-mask.open{display:flex}
+.modal{width:100%;max-width:420px;background:var(--bg-2);border:1px solid var(--border-strong);
+  border-radius:16px;padding:26px;position:relative;animation:mup .25s cubic-bezier(.16,1,.3,1)}
+@keyframes mup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.modal h3{font-size:17px;font-weight:700;margin-bottom:6px}
+.modal .sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+.copy-row{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;margin-bottom:10px}
+.copy-row .name{font-size:14px;font-weight:600}
+.copy-row .name small{display:block;font-weight:400;font-size:11.5px;color:var(--faint)}
+.copy-row button{padding:7px 15px;border-radius:999px;background:var(--primary-soft);border:1px solid var(--primary-line);
+  color:#9cc8ff;font-size:13px;font-weight:600;transition:.2s;flex:none;min-height:32px}
+.copy-row button:hover{background:var(--primary);color:#fff}
+.modal .close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--muted);transition:.2s}
+.modal .close:hover{background:var(--card);color:var(--txt)}
+.modal .tip{font-size:11.5px;color:var(--faint);margin-top:14px;line-height:1.8}
+.toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%) translateY(16px);z-index:80;
+  background:var(--green);color:#04231a;font-size:14px;font-weight:600;padding:10px 22px;border-radius:999px;
+  opacity:0;pointer-events:none;transition:.25s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ============ 保卖编辑式 Hero（左对齐 + 大字 + 数字条） ============ */
+.hero-edit .hero-in{max-width:var(--maxw);text-align:left;margin:0}
+.hero-edit h1{font-size:clamp(34px,7.4vw,66px);line-height:1.22;letter-spacing:.01em}
+.hero-edit .hero-sub{margin:20px 0 0;max-width:640px}
+.hero-edit .hero-btns{justify-content:flex-start}
+.hero-edit .hero-note{text-align:left}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;
+  border-top:1px solid var(--border);counter-reset:hs}
+.stat{padding:20px 20px 2px;border-left:1px solid var(--border)}
+.stat:first-child{border-left:none;padding-left:0}
+.stat b{font-family:var(--mono);font-size:clamp(24px,4vw,34px);font-weight:700;color:#c7cdff;display:block;line-height:1.15}
+.stat i{font-style:normal;font-size:11.5px;color:var(--faint);display:block;margin-top:5px;line-height:1.6}
+
+/* ============ 痛点区：压价话术气泡卡（2×2 紧凑网格） ============ */
+.pain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.pain-card{position:relative;display:flex;flex-direction:column;gap:13px;
+  padding:22px 22px 20px;border:1px solid var(--border);border-radius:16px;background:var(--card)}
+.pain-card .pno{position:absolute;top:20px;right:22px;font-family:var(--mono);
+  font-size:11.5px;color:var(--faint);letter-spacing:.1em}
+/* 话术气泡：仿真聊天记录（头像+昵称+气泡），正常语气排版 */
+.q-bubble{display:flex;gap:10px;align-items:flex-start}
+.q-ava{flex:none;width:30px;height:30px;border-radius:8px;
+  background:linear-gradient(135deg,#006FFF,#004BB8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13.5px;font-weight:700;color:#eef0ff;line-height:1;padding-top:1px}
+.q-msg{min-width:0}
+.q-name{display:block;font-size:10px;color:var(--faint);letter-spacing:.06em;margin:0 0 3px 2px}
+.q-msg p{position:relative;display:inline-block;background:rgba(0,111,255,.09);
+  border:1px solid rgba(0,111,255,.1);border-radius:2px 11px 11px 11px;
+  padding:8px 12px;font-size:13.5px;line-height:1.6;color:#d3d9f5}
+.q-msg p b{color:#fff;font-weight:600}
+.p-main{padding:0 2px;display:flex;flex-direction:column;gap:8px}
+.ptag{align-self:flex-start;font-size:10.5px;font-weight:700;letter-spacing:.14em;
+  color:#7ab5ff;border:1px solid rgba(0,111,255,.35);border-radius:999px;
+  padding:2.5px 11px}
+.pain-card h3{font-size:17.5px;font-weight:800;letter-spacing:.01em}
+.pain-card .why{color:var(--muted);font-size:13px;line-height:1.7}
+/* 解法行：细虚线分隔 + 轻排版，标签与正文同色号 */
+.pain-card .fix{margin-top:auto;padding-top:12px;border-top:1px dashed var(--border);
+  display:flex;flex-direction:column;gap:4px}
+.pain-card .fix b{font-size:11px;letter-spacing:.18em;color:#7ab5ff}
+.pain-card .fix span{font-size:12.5px;line-height:1.7;color:#7ab5ff}
+
+/* ============ Hero：动态地球底图（SVG 光弧+脉冲节点） + 三点辅助（保卖/拍机通用） ============ */
+.hero-globe{position:absolute;left:50%;bottom:-17%;z-index:0;
+  width:min(1280px,175%);transform:translateX(-50%);pointer-events:none}
+.hero-globe svg{display:block;width:100%;height:auto}
+/* 交易光弧：光点沿弧线流动，代表全球链接/交易进行中 */
+.hero-globe .arc{stroke-dasharray:3 130;animation:arcflow 4.5s linear infinite}
+.hero-globe .arc.a2{animation-duration:6s;animation-delay:.8s}
+.hero-globe .arc.a3{animation-duration:5.2s;animation-delay:1.6s}
+.hero-globe .arc.a4{animation-duration:7s;animation-delay:.3s}
+.hero-globe .arc.a5{animation-duration:5.6s;animation-delay:2s}
+@keyframes arcflow{to{stroke-dashoffset:-266}}
+/* 节点脉冲：呼吸光环 */
+.hero-globe .halo{transform-box:fill-box;transform-origin:center;animation:halo 3.2s ease-out infinite}
+.hero-globe .halo.h2{animation-delay:.7s}.hero-globe .halo.h3{animation-delay:1.4s}
+.hero-globe .halo.h4{animation-delay:2.1s}.hero-globe .halo.h5{animation-delay:1s}
+@keyframes halo{0%{transform:scale(.35);opacity:.85}80%{transform:scale(2.8);opacity:0}100%{transform:scale(2.8);opacity:0}}
+@media (prefers-reduced-motion: reduce){.hero-globe .arc,.hero-globe .halo{animation:none}.hero-globe .fdot{display:none}}
+/* 拍机货源汇流：枢纽上提+双端适配 */
+.hero-flow{bottom:-10%}
+@media (max-width:900px){
+  .hero-flow{width:min(1000px,280%);bottom:-14%;opacity:.85}
+}
+.hero-points{list-style:none;margin:34px 0 0;padding:0;max-width:860px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hero-points li{display:flex;gap:14px;padding:18px 18px 16px;
+  border:1px solid var(--border);border-radius:12px;background:rgba(0,111,255,.05)}
+.hero-points .ic{flex:none;width:38px;height:38px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,111,255,.16);color:#7ab5ff}
+.hero-points .ic svg{width:20px;height:20px}
+.hero-points .pt b{display:block;font-size:15.5px;letter-spacing:.01em}
+.hero-points .pt span{display:block;font-size:12.5px;color:var(--muted);line-height:1.65;margin-top:4px}
+
+/* ============ 图文并茂小元素（细线图标，克制不抢戏） ============ */
+.fstep .fic{display:inline-block;width:17px;height:17px;vertical-align:-3.5px;margin-right:7px;color:#7ab5ff}
+/* 05 拍机流程：一行五列横向链路，中间上下双模式（人工/AI智采）；STEP5列加宽防标题折行 */
+.pflow{display:grid;grid-template-columns:1fr 1fr 2.1fr 1.3fr 1fr;gap:10px;align-items:center}
+.pflow>.fstep:last-child::after{display:none}
+.pf-zone{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.pf-mode{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  border:1px solid var(--border);border-radius:var(--radius);padding:16px 10px 10px;background:rgba(11,16,33,.3)}
+.pf-mode-ai{border-color:rgba(0,111,255,.38);background:rgba(0,111,255,.07)}
+.pf-tag{position:absolute;top:-11px;left:14px;background:var(--bg,#0b1021);
+  font-size:11px;padding:2px 11px;white-space:nowrap}
+.pf-mode-ai .pf-tag{background:var(--primary);border-color:var(--primary);color:#fff;
+  box-shadow:0 0 14px rgba(0,111,255,.3)}
+.pf-mode .fstep:last-child::after{display:none}
+.pf-tabs{display:none}
+@media (max-width:1024px){
+  .pflow{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+  /* 模式切换 Tab：一次只看一条链路 */
+  .pf-tabs{display:flex;gap:8px}
+  .pf-tab{flex:1;padding:10px 0;border-radius:999px;border:1px solid var(--border);
+    background:rgba(11,16,33,.3);color:var(--muted);font-size:12.5px;font-weight:700;white-space:nowrap;
+    font-family:inherit;cursor:pointer;transition:all .18s ease}
+  .pf-tab.active{background:var(--primary);border-color:var(--primary);color:#fff;
+    box-shadow:0 0 14px rgba(0,111,255,.3)}
+  .pf-mode{display:none}
+  .pf-mode.active{display:flex;flex-direction:column;gap:10px;padding:14px 10px 10px}
+  .pf-mode .pf-tag{display:none}
+}
+
+/* ============ 四大保障（一卡一图布局） ============ */
+.adv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.adv-card{display:flex;flex-direction:column;gap:11px}
+.adv-card h3{font-size:18px;font-weight:800;letter-spacing:.01em;line-height:1.4}
+.adv-card p{color:var(--muted);font-size:13.5px;line-height:1.75;margin:0}
+/* 保障标签：01 极速 / 02 高价 / 03 透明 / 04 省心 */
+.adv-tag{display:inline-flex;align-items:center;align-self:flex-start;font-family:var(--mono);
+  font-size:12px;font-weight:700;letter-spacing:.1em;color:#7ab5ff;
+  border:1px solid rgba(0,111,255,.35);border-radius:999px;padding:3.5px 13px}
+/* 卡片配图：置于卡片底部（文字在上），margin-top:auto 贴底，保证多卡图片底边对齐 */
+.adv-img{margin:auto 0 0;border:1px solid var(--border);border-radius:12px;overflow:hidden;
+  background:radial-gradient(120% 100% at 50% 0%,rgba(0,111,255,.14),rgba(11,16,33,0) 72%)}
+.adv-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}
+.adv-img.img-contain img{object-fit:contain;padding:14px;aspect-ratio:16/9}
+/* 01 极速：全宽卡，左文右动画（内文与其他卡统一 11px 间距规范） */
+.adv-speed{grid-column:1/-1;flex-direction:row;align-items:center;gap:40px;padding:26px 24px}
+.adv-speed .speed-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:11px}
+.adv-speed h3{margin-bottom:0}
+/* 下单→验机→回款 极简演示动画：逐个点亮✅后常亮，全部亮完一起熄灭，循环（7.2s/轮） */
+.flow-demo{flex:none;display:flex;align-items:center;gap:12px;padding-right:6px}
+.fd-step{position:relative;display:flex;flex-direction:column;align-items:center;gap:7px;width:108px}
+.fd-ic{position:relative;width:52px;height:52px;border-radius:14px;border:1px solid var(--border);
+  background:rgba(0,111,255,.06);display:flex;align-items:center;justify-content:center;color:#67718f;
+  animation:fdl1 7.2s infinite}
+.fd-ic svg{width:24px;height:24px}
+.fd-badge{position:absolute;top:-7px;right:-7px;width:19px;height:19px;border-radius:50%;
+  background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(.4);animation:fdb1 7.2s infinite}
+.fd-badge svg{width:11px;height:11px}
+.fd-step b{font-size:13.5px;color:var(--muted);animation:fdt1 7.2s infinite}
+.fd-step .fd-sub{font-size:10.5px;color:var(--faint);text-align:center;line-height:1.5;min-height:calc(2 * 1.5em)}
+.fd-arrow{flex:none;width:30px;height:2px;margin-bottom:36px;position:relative;
+  background:rgba(0,111,255,.16);border-radius:2px}
+.fd-arrow::after{content:"";position:absolute;top:-1.5px;left:0;width:9px;height:5px;border-radius:3px;
+  background:#7ab5ff;opacity:0;animation:fda1 7.2s infinite}
+/* 三个步骤分别绑定自己的时间线：s1≈10%亮 / s2≈41%亮 / s3≈72%亮，88%全亮常驻，92%一起熄灭 */
+.fd-s1 .fd-ic{animation-name:fdl1}.fd-s2 .fd-ic{animation-name:fdl2}.fd-s3 .fd-ic{animation-name:fdl3}
+.fd-s1 .fd-badge{animation-name:fdb1}.fd-s2 .fd-badge{animation-name:fdb2}.fd-s3 .fd-badge{animation-name:fdb3}
+.fd-s1 b{animation-name:fdt1}.fd-s2 b{animation-name:fdt2}.fd-s3 b{animation-name:fdt3}
+.fa-1::after{animation-name:fda1}.fa-2::after{animation-name:fda2}
+@keyframes fdl1{
+  0%,6%{border-color:var(--border);background:rgba(0,111,255,.06);color:#67718f;box-shadow:none}
+  10%,88%{border-color:rgba(0,111,255,.55);background:rgba(0,111,255,.1);color:#7ab5ff;box-shadow:0 0 18px rgba(0,111,255,.28)}
+  92%,100%{border-color:var(--border);background:rgba(0,111,255,.06);color:#67718f;box-shadow:none}}
+@keyframes fdl2{
+  0%,37%{border-color:var(--border);background:rgba(0,111,255,.06);color:#67718f;box-shadow:none}
+  41%,88%{border-color:rgba(0,111,255,.55);background:rgba(0,111,255,.1);color:#7ab5ff;box-shadow:0 0 18px rgba(0,111,255,.28)}
+  92%,100%{border-color:var(--border);background:rgba(0,111,255,.06);color:#67718f;box-shadow:none}}
+@keyframes fdl3{
+  0%,68%{border-color:var(--border);background:rgba(0,111,255,.06);color:#67718f;box-shadow:none}
+  72%,88%{border-color:rgba(0,111,255,.55);background:rgba(0,111,255,.1);color:#7ab5ff;box-shadow:0 0 18px rgba(0,111,255,.28)}
+  92%,100%{border-color:var(--border);background:rgba(0,111,255,.06);color:#67718f;box-shadow:none}}
+@keyframes fdb1{
+  0%,6%{opacity:0;transform:scale(.4)}
+  10%,88%{opacity:1;transform:scale(1)}
+  92%,100%{opacity:0;transform:scale(.4)}}
+@keyframes fdb2{
+  0%,37%{opacity:0;transform:scale(.4)}
+  41%,88%{opacity:1;transform:scale(1)}
+  92%,100%{opacity:0;transform:scale(.4)}}
+@keyframes fdb3{
+  0%,68%{opacity:0;transform:scale(.4)}
+  72%,88%{opacity:1;transform:scale(1)}
+  92%,100%{opacity:0;transform:scale(.4)}}
+@keyframes fdt1{
+  0%,6%{color:var(--muted)}
+  10%,88%{color:#7ab5ff}
+  92%,100%{color:var(--muted)}}
+@keyframes fdt2{
+  0%,37%{color:var(--muted)}
+  41%,88%{color:#7ab5ff}
+  92%,100%{color:var(--muted)}}
+@keyframes fdt3{
+  0%,68%{color:var(--muted)}
+  72%,88%{color:#7ab5ff}
+  92%,100%{color:var(--muted)}}
+@keyframes fda1{
+  0%,8%{left:0;opacity:0}
+  11%{opacity:1}
+  37%{left:calc(100% - 9px);opacity:1}
+  41%,100%{left:calc(100% - 9px);opacity:0}}
+@keyframes fda2{
+  0%,39%{left:0;opacity:0}
+  42%{opacity:1}
+  68%{left:calc(100% - 9px);opacity:1}
+  72%,100%{left:calc(100% - 9px);opacity:0}}
+@media (prefers-reduced-motion: reduce){
+  .fd-ic,.fd-badge,.fd-step b,.fd-arrow::after{animation:none}
+  .fd-ic{border-color:rgba(0,111,255,.55);background:rgba(0,111,255,.1);color:#7ab5ff}
+  .fd-badge{opacity:1;transform:none}
+  .fd-step b{color:#7ab5ff}
+  .fd-arrow::after{opacity:1;left:calc(50% - 4.5px)}
+}
+
+/* ============ 拍机双重保障：动画配图 ============ */
+/* 双列布局（四大保障删减为双重保障后专用） */
+.adv-grid-2{grid-template-columns:repeat(2,1fr)}
+/* 动画配图容器：覆盖 .adv-img img 的 16:9 cover 规则，由内部动画自控比例 */
+.adv-anim img{aspect-ratio:auto;object-fit:contain;padding:0;width:100%;height:auto}
+/* 六模块极简图标（inline SVG，线稿 + 主色点缀） */
+.adv-ui{display:flex;align-items:center;justify-content:center;padding:12px 10px}
+.ui-svg{display:block;width:min(94%,340px);height:auto;overflow:visible}
+.ic-ring{fill:none;stroke:rgba(0,111,255,.10)}
+.ic-ring2{fill:none;stroke:rgba(0,111,255,.05)}
+.ic-l{fill:none;stroke:#7ab5ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic-d{fill:none;stroke:rgba(122,181,255,.35);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic-f{fill:rgba(0,111,255,.14)}
+.ic-b{fill:#006FFF}
+.ic-w{fill:#fff}
+.ic-dot{fill:rgba(122,181,255,.4)}
+/* 01 货多：货源汇流动画（8 路光点汇向本地定位，SMIL 3.6s 错峰循环） */
+.src-flow{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;padding:10px 12px}
+.src-flow svg{display:block;width:100%;height:100%;overflow:visible}
+.sf-dim{fill:none;stroke:rgba(0,111,255,.17);stroke-width:1.5;stroke-linecap:round}
+.sf-label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;fill:#67718f}
+/* 02 透明：手机进机器消失→机器刷一下→报告出现→打勾→消失（CSS keyframes 7s 循环） */
+.chk-flow{position:relative;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;gap:6%;padding:14px 18px}
+.cf-phone{flex:none;height:26%;width:auto;color:#7ab5ff;filter:drop-shadow(0 0 8px rgba(0,111,255,.5));animation:cf-phone 5s ease-in-out infinite}
+.cf-machine{position:relative;flex:none;height:86%;display:flex;align-items:center}
+.cf-machine img{display:block;height:100%;width:auto;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35));animation:cf-glow 5s ease-in-out infinite}
+.cf-machine::after{content:'';position:absolute;left:8%;right:8%;bottom:-7%;height:10%;border-radius:50%;
+  background:radial-gradient(50% 100% at 50% 50%,rgba(0,111,255,.4),rgba(0,111,255,0) 72%);
+  filter:blur(3px);animation:cf-ground 5s ease-in-out infinite}
+.cf-report{position:relative;flex:none;height:54%}
+.cf-report img{display:block;height:100%;width:auto;border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(122,181,255,.3);animation:cf-report 5s ease-in-out infinite}
+.cf-stamp{position:absolute;top:-9px;right:-9px;width:24px;height:24px;border-radius:50%;
+  background:var(--primary);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 14px rgba(0,111,255,.55);opacity:0;transform:scale(.4);animation:cf-stamp 5s ease-in-out infinite}
+.cf-stamp svg{width:13px;height:13px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@keyframes cf-phone{
+  0%{opacity:0;transform:translateX(-22px)}
+  5%{opacity:1;transform:translateX(0)}
+  13%{opacity:1;transform:translateX(66px) scale(.72)}
+  19%,100%{opacity:0;transform:translateX(96px) scale(.5)}}
+@keyframes cf-glow{
+  0%,19%{filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+  23%,29%{filter:drop-shadow(0 6px 18px rgba(0,0,0,.35)) drop-shadow(0 0 28px rgba(0,111,255,.6)) brightness(1.16)}
+  36%,100%{filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}}
+@keyframes cf-ground{
+  0%,19%{opacity:.55}
+  25%,31%{opacity:1}
+  38%,100%{opacity:.55}}
+@keyframes cf-report{
+  0%,28%{opacity:0;transform:translateX(-20px) scale(.94)}
+  34%,72%{opacity:1;transform:translateX(0) scale(1)}
+  78%,100%{opacity:0;transform:translateX(0) scale(1)}}
+@keyframes cf-stamp{
+  0%,36%{opacity:0;transform:scale(.4)}
+  41%{opacity:1;transform:scale(1.14)}
+  45%,72%{opacity:1;transform:scale(1)}
+  78%,100%{opacity:0;transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){
+  .sfd,.sf-ripple,.cf-phone{display:none}
+  .cf-machine img{animation:none;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+  .cf-machine::after{animation:none;opacity:.7}
+  .cf-report{animation:none;opacity:1;transform:none}
+  .cf-report img{animation:none}
+  .cf-stamp{animation:none;opacity:1;transform:none}
+}
+
+/* ============ 滚动浮现（级联延迟由 JS 注入） ============ */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ================================================================
+   响应式
+================================================================ */
+@media (max-width:900px){
+  .grid-3,.grid-4,.guide{grid-template-columns:repeat(2,1fr)}
+  .flow,.flow.f4,.flow.f5{grid-template-columns:repeat(2,1fr)}
+  .fstep::after{display:none}
+  .rule-item{grid-template-columns:1fr;gap:6px;padding:18px 20px}
+  .join-card{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .join-card .contact-rows{align-items:center}
+  .sec-head{margin-bottom:34px}
+  /* 四大保障：3 列 → 单列；极速卡上下堆叠 */
+  .adv-grid{grid-template-columns:1fr;gap:14px}
+  .adv-speed{flex-direction:column;align-items:stretch;gap:22px;padding:22px 20px}
+  .flow-demo{justify-content:space-between;gap:6px;padding-right:0}
+  .fd-step{width:auto;gap:6px}
+  .fd-step .fd-sub{max-width:96px;font-size:10px}
+  .fd-arrow{width:auto;flex:1;margin-bottom:30px}
+  /* 客户画像 3 卡：手机端单列（避免 2+1 落单） */
+  #bm-who .grid-3,#pj-who .grid-3,#pj-ease .grid-3{grid-template-columns:1fr}
+  /* 痛点气泡卡：双列 → 单列堆叠 */
+  .pain-grid{grid-template-columns:1fr;gap:12px}
+  .pain-card{padding:18px 18px 16px;gap:12px}
+  .pain-card h3{font-size:16.5px}
+  .pain-card .why{font-size:12.5px}
+  .q-bubble p{font-size:13px}
+  /* 首屏三点辅助：横排 → 竖排单列 */
+  .hero-points{grid-template-columns:1fr;gap:10px;margin-top:26px}
+  .hero-points li{padding:13px 16px;align-items:center}
+  /* 数字条 4 列 → 2×2 */
+  .hero-stats{grid-template-columns:repeat(2,1fr);gap:18px 0}
+  .stat{padding:16px 16px 2px}
+  .stat:nth-child(odd){padding-left:0;border-left:none}
+}
+@media (max-width:560px){
+  .grid-2{grid-template-columns:1fr}
+  .flow,.flow.f4,.flow.f5{grid-template-columns:1fr}
+  section{padding:48px 0}
+  .hero{padding:56px 0 36px}
+  .hero-badge .badge-logo{height:16px}
+  .join-card{padding:28px 22px}
+  /* 修复：单列网格里 span 2 导致卡片溢出走位 */
+  .grid-2>.card{grid-column:auto}
+  /* 修复：小屏顶栏业务徽标过长把布局挤走位 */
+  .nav-biz-badge{max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nav-in{padding:10px 16px;gap:10px}
+  .wrap{padding:0 18px}
+  /* 修复：底部悬浮拓客按钮遮挡页脚内容 */
+  footer{padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+  .hero-edit .hero-btns .btn{flex:1;min-width:0}
+  .hero-points li{gap:12px}
+  .hero-points .ic{width:34px;height:34px}
+  .hero-points .pt b{font-size:14px}
+  .hero-points .pt span{font-size:12px}
+  /* 四大保障：小屏字号与图高 */
+  .adv-card h3{font-size:16.5px}
+  .adv-card p{font-size:13px}
+  .adv-speed{padding:20px 16px}
+  .fd-step{width:auto}
+  .fd-ic{width:46px;height:46px;border-radius:12px}
+  .fd-ic svg{width:21px;height:21px}
+  .fd-step b{font-size:12.5px}
+  .fd-step .fd-sub{font-size:10px}
+  .fd-arrow{margin-bottom:28px}
+}
+@media (min-width:1024px){
+  /* 讲解模式 */
+  section{padding:92px 0}
+  .hero{padding:118px 0 64px}
+  h1{font-size:58px}
+  h2{font-size:34px}
+  .sec-head{margin-bottom:54px}
+  .card{padding:30px 28px}
+  .card h3{font-size:18px}
+  .card p{font-size:14.5px}
+  .pain-quote{font-size:20px}
+  /* 保卖编辑式排版：讲解模式加大 */
+  .hero-edit{padding:96px 0 72px}
+  .pain-grid{gap:18px}
+  .pain-card{padding:26px 26px 24px}
+  .pain-card h3{font-size:19px}
+  .pain-card .why{font-size:13.5px}
+  .q-bubble p{font-size:14.5px}
+  /* 四大保障：讲解模式 */
+  .adv-grid{gap:20px}
+  .adv-card h3{font-size:19.5px}
+  .adv-card p{font-size:14px}
+  .adv-speed{gap:56px;padding:30px 34px}
+  .fd-step{width:110px}
+  .fd-step .fd-sub{font-size:11px}
+  .hero-points{gap:16px}
+  .hero-points .pt b{font-size:16px}
+  .hero-points .pt span{font-size:13px}
+}
+
+/* ============ 首页 v0.11.0 新板块响应式 ============ */
+@media (max-width:900px){
+  .an-row{grid-template-columns:1fr;gap:16px;padding:20px 18px}
+  .an-fig2 img{height:158px}
+}
+@media (max-width:560px){
+  #why .grid-3{grid-template-columns:1fr}
+  .biz-band{flex-direction:column;align-items:flex-start;gap:24px;padding:20px 16px}
+  /* 信息栏打散进横带，按钮沉到模块最下层 */
+  .bb-info{display:contents}
+  .bb-anim{width:100%;justify-content:flex-start;order:5}
+  .bb-info .go{order:6;align-self:center;margin-top:2px}
+  /* 流程步：保持桌面横向蛇形，整体缩小一档 */
+  .hfsteps{max-width:none;padding-top:22px}
+  .hfstep{width:66px;gap:7px}
+  .fs-ic{width:37px;height:37px;border-radius:10px}
+  .fs-ic .fs-g{width:17px;height:17px}
+  .fs-check{width:14px;height:14px;top:-6px;right:-6px;padding:2px}
+  .fs-lb{font-size:10px;line-height:1.4}
+  .fs-arr{min-width:12px;margin-top:18px}
+  .fs-turn{height:18px;padding-right:24px}
+  .fs-mid{font-size:9px;padding:2px 6px;bottom:7px}
+  .fs-badge{font-size:9.5px;padding:2px 8px;bottom:calc(100% + 6px)}
+  /* 行末步骤角标右锚定，防右缘裁切 */
+  .fs-row .hfstep:last-child .fs-badge{left:auto;right:0;transform:translateY(5px)}
+  .fs-row .hfstep:last-child.on .fs-badge,.fs-row .hfstep:last-child.done .fs-badge{transform:none}
+  /* 验机动画：等比压缩 */
+  .yj-flow{max-width:none;gap:12px;padding:4px 0}
+  .yj-queue{width:106px;height:60px}
+  .yj-ph{width:30px;height:53px;margin-top:-26px;--slot:38px;--exin:48px}
+  .yj-machine img{height:138px}
+  .yj-reps{width:64px;height:96px}
+  .yj-rep{width:44px;margin:-46px 0 0 -22px}
+  .yj-rep .stk{width:16px;height:16px;top:-6px;right:-7px}
+  .hchip{font-size:12px;padding:6px 12px}
+  .why-sum{margin-top:28px;padding:20px 16px}
+  .why-sum p{font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ================= 顶栏：logo + CTA，仅此而已 ================= -->
+<nav class="nav" hidden>
+  <div class="nav-in">
+    <a class="nav-home" id="nav-home" href="#" onclick="goHome(event)" hidden>← 返回首页</a>
+    <a class="logo" href="#" onclick="goHome(event)" aria-label="壹准">
+      <span class="logo-mark">壹</span>壹准
+    </a>
+    <div class="nav-right">
+      <span class="nav-biz-badge" id="nav-biz-badge" hidden></span>
+      <a class="nav-cta" id="nav-cta" href="#join">合作咨询</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================================================================
+     ① 聚合页 view-home（A 类客户）
+================================================================ -->
+<div id="view-home">
+
+  <header class="hero">
+    <div class="hero-in">
+      <h1 class="h-anim">用壹准AI生态平台，<br><em>把二手生意重做一遍</em></h1>
+      <div class="hero-chips h-anim d1">
+        <span class="hchip">分布式验机机器人对齐非标品</span><span class="hplus">+</span>
+        <span class="hchip">AI ERP提升经营效率</span><span class="hplus">+</span>
+        <span class="hchip">AI交易平台降低交易成本</span>
+      </div>
+      <div class="hero-btns h-anim d2">
+        <a class="btn btn-green" href="#join">合作咨询</a>
+      </div>
+      <p class="hero-note h-anim d4"><!-- Hero 主标语占位：现用「用壹准AI生态平台，把二手生意重做一遍」（用户钦定 v0.11.1） --></p>
+    </div>
+  </header>
+
+  <!-- 三业务入口 -->
+  <section id="biz-cards">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">01</span><span class="line"></span><span class="cat">BUSINESS</span></div>
+        <h2>四大业务板块，覆盖二手生意<em>全链路</em></h2>
+      </div>
+      <div class="biz-bands" data-stagger>
+        <!-- 01 壹准保卖 -->
+        <div class="card biz-band reveal">
+          <div class="bb-info">
+            <span class="biz-pill"><img src="assets/logo-bm.png" alt="壹准保卖" loading="lazy">本地B端回收服务</span>
+            <h3 class="bb-title">壹准保卖<br><em>本地B端最优出货渠道。</em></h3>
+            <p class="bb-desc">B端商家批量下单后同城物流半小时送到壹准城市中心，由机器人标准化验机出《“壹准官方验”报告》，全球二手商的AI买手即时竞拍卖出最高价。同城服务全程透明，快速回款。</p>
+            <a class="go" href="#" onclick="openBiz('baomai');return false;">了解壹准保卖 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="bb-anim" aria-hidden="true">
+            <div class="hfsteps" data-flow>
+              <div class="fs-row">
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">商家下单</span></div>
+                <span class="fs-arr"><span class="fs-mid">最快半小时</span></span>
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><path d="M12 21s-7-5.2-7-11a7 7 0 1 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">本地壹准<br>二手机中心</span></div>
+                <span class="fs-arr"></span>
+                <div class="hfstep"><span class="fs-badge">「壹准官方验」报告</span><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="10" rx="2.5"/><path d="M12 8V5M10 5h4"/><circle cx="9.5" cy="13" r="1.1"/><circle cx="14.5" cy="13" r="1.1"/><path d="M9.5 15.6h5"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">机器人标准验机</span></div>
+              </div>
+              <div class="fs-turn"><span class="tv"></span></div>
+              <div class="fs-row rev">
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c-4.7 4.7-4.7 12.3 0 17 4.7-4.7 4.7-12.3 0-17z"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">全球二手商<br>即时竞价</span></div>
+                <span class="fs-arr"></span>
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M14.8 9.3c-.6-1-1.6-1.6-2.8-1.6-1.7 0-3 1-3 2.3 0 2.9 6 1.6 6 4.3 0 1.4-1.4 2.4-3 2.4-1.4 0-2.5-.6-3-1.6"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">最快当天回款</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 02 壹准拍机 -->
+        <div class="card biz-band reveal">
+          <div class="bb-info">
+            <span class="biz-pill"><img src="assets/logo-pj.png" alt="壹准拍机" loading="lazy">B端采货方式和渠道</span>
+            <h3 class="bb-title">壹准拍机<br><em>B端智能竞拍采货平台。</em></h3>
+            <p class="bb-desc">二手机货源为王，壹准拍机是各个城市的本地源头优质货源；机器人官方验提供的可信验机报告无报价顾虑；拍机报价都是由各家的AI报价采购师执行，无人工成本且不漏单，智能体7×24小时干活，老板尽在掌控只需看推送的报告。</p>
+            <a class="go" href="#" onclick="openBiz('paiji');return false;">了解壹准拍机 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+          <div class="bb-anim" aria-hidden="true">
+            <div class="hfsteps" data-flow>
+              <div class="fs-row">
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/><circle cx="9" cy="7" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="17" r="2"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">配置采货策略</span></div>
+                <span class="fs-arr"></span>
+                <div class="hfstep"><span class="fs-badge">7×24h不间断</span><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="10" rx="2.5"/><path d="M12 8V5M10 5h4"/><circle cx="9.5" cy="13" r="1.1"/><circle cx="14.5" cy="13" r="1.1"/><path d="M9.5 15.6h5"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">AI报价采购师<br>智能采货</span></div>
+                <span class="fs-arr"></span>
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 17v-5M12 17V8M17 17v-3"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">老板查看采购结果</span></div>
+                <span class="fs-arr"></span>
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3.5 8.5L12 13l8.5-4.5M12 13v8"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">收货验收</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 03 壹准bot速收 -->
+        <div class="card biz-band reveal">
+          <div class="bb-info">
+            <span class="biz-pill"><img src="assets/logo-ss.png" alt="壹准bot速收" loading="lazy">C端回收服务</span>
+            <h3 class="bb-title">壹准bot速收<br><em>C端线上回收服务基础设施。</em></h3>
+            <p class="bb-desc">壹准Bot速收是一个颠覆性创新的回收服务，本地化闪购式回收体验。消费者下单后同城物流半小时送到壹准城市中心，机器人标准化验机迅速出《“壹准官方验”报告》，全球二手商的AI买手即时竞拍卖出最高价，同意回收秒到账，全程透明高效。因为全程极致降本增效和去中间商，所以能给出最高的回收价格。</p>
+          </div>
+          <div class="bb-anim" aria-hidden="true">
+            <div class="hfsteps" data-flow>
+              <div class="fs-row">
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M10.5 5h3"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">用户下单</span></div>
+                <span class="fs-arr"><span class="fs-mid">最快半小时</span></span>
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><rect x="2.5" y="7" width="12" height="9" rx="1.5"/><path d="M14.5 10h4l3 3v3h-7"/><circle cx="7" cy="18.5" r="1.8"/><circle cx="17.5" cy="18.5" r="1.8"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">同城跑腿上门取件</span></div>
+                <span class="fs-arr"></span>
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><path d="M4 21V7l8-4 8 4v14M4 21h16M10 21v-4h4v4"/><path d="M9 10.5h2M13 10.5h2M9 14h2M13 14h2"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">配送至本地<br>壹准二手机中心</span></div>
+                <span class="fs-arr"></span>
+                <div class="hfstep"><span class="fs-badge">「壹准官方验」报告</span><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="10" rx="2.5"/><path d="M12 8V5M10 5h4"/><circle cx="9.5" cy="13" r="1.1"/><circle cx="14.5" cy="13" r="1.1"/><path d="M9.5 15.6h5"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">机器人标准验机</span></div>
+              </div>
+              <div class="fs-turn"><span class="tv"></span></div>
+              <div class="fs-row rev">
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M14.8 9.3c-.6-1-1.6-1.6-2.8-1.6-1.7 0-3 1-3 2.3 0 2.9 6 1.6 6 4.3 0 1.4-1.4 2.4-3 2.4-1.4 0-2.5-.6-3-1.6"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">用户收款</span></div>
+                <span class="fs-arr"></span>
+                <div class="hfstep"><span class="fs-ic"><svg class="fs-g" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c-4.7 4.7-4.7 12.3 0 17 4.7-4.7 4.7-12.3 0-17z"/></svg><svg class="fs-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span><span class="fs-lb">即时上架<br>全球竞拍</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 04 壹准验机 -->
+        <div class="card biz-band reveal">
+          <div class="bb-info">
+            <span class="biz-pill"><img src="assets/logo-yj.png" alt="壹准验机" loading="lazy">验机服务</span>
+            <h3 class="bb-title">壹准验机<br><em>承接二手电商的验机与认证服务。</em></h3>
+            <p class="bb-desc">壹准验机是一个颠覆性创新的验机服务品牌。壹准验机机器人彻底解决了传统人工验机效率低下、检测不全面、不标准的痛点，遍布每个城市的壹准验机机器人组成覆盖全中国的分布式智能验机网络。同一台手机，在任何时间、任何地点的壹准验机机器人上检测，结果完全一致。</p>
+          </div>
+          <div class="bb-anim" aria-hidden="true">
+            <div class="yj-flow">
+              <div class="yj-queue">
+                <span class="yj-ph yj1"><svg viewBox="0 0 26 46"><rect x="1.5" y="1.5" width="23" height="43" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10" y="6" width="6" height="2.4" rx="1.2" fill="currentColor" opacity=".7"/><rect x="6" y="11" width="14" height="22" rx="2" fill="rgba(0,111,255,.16)"/><path d="M8 34 L14 16" stroke="rgba(255,255,255,.3)" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span>
+                <span class="yj-ph yj2"><svg viewBox="0 0 26 46"><rect x="1.5" y="1.5" width="23" height="43" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10" y="6" width="6" height="2.4" rx="1.2" fill="currentColor" opacity=".7"/><rect x="6" y="11" width="14" height="22" rx="2" fill="rgba(0,111,255,.16)"/><path d="M8 16 L14 34" stroke="rgba(255,255,255,.3)" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span>
+                <span class="yj-ph yj3"><svg viewBox="0 0 26 46"><rect x="1.5" y="1.5" width="23" height="43" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10" y="6" width="6" height="2.4" rx="1.2" fill="currentColor" opacity=".7"/><rect x="6" y="11" width="14" height="22" rx="2" fill="rgba(0,111,255,.16)"/><path d="M8 34 L14 16" stroke="rgba(255,255,255,.3)" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span>
+              </div>
+              <div class="yj-machine">
+                <img src="assets/machine-big.png" alt="壹准验机机器人" loading="lazy">
+              </div>
+              <div class="yj-reps">
+                <span class="yj-rep yjr1"><img src="assets/pj-report.png" alt="壹准官方验报告"><span class="stk"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+                <span class="yj-rep yjr2"><img src="assets/pj-report.png" alt="壹准官方验报告"><span class="stk"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+                <span class="yj-rep yjr3"><img src="assets/pj-report.png" alt="壹准官方验报告"><span class="stk"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 行业困局：非标对不齐（宣言共识叙事，讲给合作商户听） -->
+  <section id="why">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">02</span><span class="line"></span><span class="cat">INSIGHT</span></div>
+        <h2>二手生意最难的一步：<br>不是买卖，是<em>「对不齐」</em></h2>
+        <p class="sec-desc">二手手机是典型的非标品，每一台的成色、元器件状况都独一无二。“检测”就成了整个二手流通价值链的基石。如果检测报告无法对齐，就会导致大量的交易摩擦和低效浪费——对齐成本吞噬利润，是被忽略的最大隐性成本。</p>
+      </div>
+      <div class="grid grid-3" data-stagger>
+        <div class="card why-card reveal">
+          <span class="big-no">01</span>
+          <h3>反复验机，层层“买单”</h3>
+          <p>同一台手机，从C2B回收、B2B流通到B2C零售，每转一手都要重新验机、重新描述、重新建立信任。对齐成本层层叠加，摊薄每一环的利润。</p>
+        </div>
+        <div class="card why-card reveal">
+          <span class="big-no">02</span>
+          <h3>报告黑箱，信任昂贵</h3>
+          <p>“验机黑箱”、“阴阳报告”长期存在，买家不敢凭描述下单，卖家只能靠降价成交。信任越贵，生意越难做大。</p>
+        </div>
+        <div class="card why-card reveal">
+          <span class="big-no">03</span>
+          <h3>对齐信息，无法传递</h3>
+          <p>简单“互联网+二手“模式只能实现“人与人之间的链接”，只解决了“连接”，无法解决“对齐”，因此当前二手电商才被迫回归线下看货的“卖场模式“。</p>
+        </div>
+      </div>
+
+      <!-- 模块总结：收束困局，引出解法 -->
+      <div class="why-sum reveal">
+        <p>要真正实现“非标品在线上高效交易”，必须先做到非标品“货”的<em>检测标准化</em>，在商品数字化的基础上推进<em>“AI+二手“</em>。在AI与产业加速融合的今天，用<em>人工智能、机器人技术</em>才能推进二手行业的破局重构。</p>
+      </div>
+    </div>
+  </section>
+  <!-- 03 壹准的解法：三模块左内容右图 -->
+  <section id="answer">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">03</span><span class="line"></span><span class="cat">SOLUTION</span></div>
+        <h2><span class="h2-pre">壹准AI生态平台的解法</span><br>机器人<em>对齐</em>，AI<em>做买卖</em>。</h2>
+        <p class="sec-desc">「AI+二手」产业新范式——分布式验机机器人对齐非标品，AI 智能体接管交易里的繁琐工作，用AI自动化方式在二手行业搞经营、做买卖。</p>
+      </div>
+      <div class="an-stack" data-stagger>
+        <div class="card an-row reveal">
+          <div class="an-info">
+            <span class="big-no">01</span>
+            <h3>验机机器人，对齐非标品</h3>
+            <p>同一台手机，在任何时间、任何地点的壹准验机机器人上检测，结果完全一致。“壹准官方验”报告即描述，重复验机、描述纠纷等隐性成本从此消失。</p>
+            <button class="an-go" onclick="openBiz('baomai')">卖货的，看壹准保卖 →</button>
+          </div>
+          <figure class="an-fig2" aria-hidden="true">
+            <img class="fill" src="assets/an-robot.png" alt="壹准验机机器人" loading="lazy">
+          </figure>
+        </div>
+        <div class="card an-row reveal">
+          <div class="an-info">
+            <span class="big-no">02</span>
+            <h3>AI智能体，提升效率。</h3>
+            <p>AI 买手、AI销售等智能体大量取代人工，7×24 小时执行搜寻、看货、报价、沟通等繁琐工作，颗粒度细到 1 台；老板只在最终决策时介入，且此时已拥有100%对齐的信息。</p>
+            <button class="an-go" onclick="openBiz('paiji')">买货的，看壹准拍机 →</button>
+          </div>
+          <figure class="an-fig2" aria-hidden="true">
+            <img class="fill" src="assets/an-agent.png" alt="AI智能体" loading="lazy">
+          </figure>
+        </div>
+        <div class="card an-row reveal">
+          <div class="an-info">
+            <span class="big-no">03</span>
+            <h3>AI 交易平台，交易摩擦趋零。</h3>
+            <p>从「人找货」到「AI 匹配货」，从「人与人议价」到「AI 与 AI 对齐」，二手手机的流通效率趋近最大化。</p>
+            <a class="an-go" href="#biz-cards">回看四大业务板块 ↑</a>
+          </div>
+          <figure class="an-fig2" aria-hidden="true">
+            <img class="fill" src="assets/an-market.png" alt="AI 交易平台" loading="lazy">
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 关于绿怡科技 -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">04</span><span class="line"></span><span class="cat">ABOUT</span></div>
+        <h2>关于<em>绿怡科技</em></h2>
+      </div>
+      <div class="card an-row reveal">
+        <div class="an-info">
+          <p>广州绿怡科技公司是中国最领先的二手流通行业AI质检服务平台，智能质检机器人产品全球领先，是苹果大中华区、中国电信、中国移动等以旧换新业务的核心服务商。</p>
+          <p>正着力搭建全国最大的C2B/B2B二手手机交易平台，链接全国所有区县头部回收商、B端商户、国际采购商，贯通回收、流通、销售全链条。引领企业集群，构建万亿赛道产业新生态。</p>
+        </div>
+        <figure class="an-fig2" aria-hidden="true">
+          <img src="assets/an-company.png" alt="绿怡科技智能质检产品矩阵" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="join">
+    <div class="wrap reveal">
+      <div class="join-card duo">
+        <div class="qr-duo">
+          <div class="qr-item">
+            <div class="qr-box"><img src="assets/qr-bm.jpg" alt="壹准保卖小程序码" loading="lazy"></div>
+            <b>壹准保卖</b>
+            <span>扫码注册壹准保卖，开始卖货。</span>
+          </div>
+          <div class="qr-item">
+            <div class="qr-box"><img src="assets/qr-pj.jpg" alt="壹准拍机小程序码" loading="lazy"></div>
+            <b>壹准拍机</b>
+            <span>扫码注册壹准拍机，开始采货。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /view-home -->
+
+<!-- ================================================================
+     ② 壹准保卖子页 view-baomai（v0.3.0 重做）
+     结构：编辑式Hero(大字+数字条) → 痛点清单(报刊式) → 四个承诺 → 适合谁 → 上手流程 → 规则要点
+     内容来源：壹准保卖PPT v1 / 联盟宣言 / 飞书《商家交易规范》《取消保卖规则》《收费标准》《业务FAQ》
+================================================================ -->
+<div id="view-baomai" hidden>
+  <header class="hero hero-edit bm-hero">
+    <div class="hero-globe" aria-hidden="true">
+      <svg viewBox="0 0 1200 560" fill="none">
+        <defs>
+          <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#2b4bd8" stop-opacity=".5"/>
+            <stop offset="45%" stop-color="#1d329f" stop-opacity=".28"/>
+            <stop offset="100%" stop-color="#0b1021" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="bg-rim" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#4c6ef5" stop-opacity="0"/>
+            <stop offset="35%" stop-color="#7c9bff" stop-opacity=".45"/>
+            <stop offset="65%" stop-color="#8fb0ff" stop-opacity=".8"/>
+            <stop offset="100%" stop-color="#4c6ef5" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="bg-arc" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#006FFF" stop-opacity="0"/>
+            <stop offset="50%" stop-color="#7ab5ff" stop-opacity=".95"/>
+            <stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="bg-node" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#e2ebff"/>
+            <stop offset="100%" stop-color="#3d8bff"/>
+          </radialGradient>
+        </defs>
+        <!-- 大气辉光：地平线上的光晕 -->
+        <ellipse cx="600" cy="320" rx="880" ry="190" fill="url(#bg-glow)"/>
+        <!-- 星点 -->
+        <g fill="#aebcff" opacity=".35">
+          <circle cx="140" cy="120" r="1.6"/><circle cx="300" cy="60" r="1.2"/><circle cx="520" cy="140" r="1.4"/>
+          <circle cx="700" cy="70" r="1.2"/><circle cx="880" cy="130" r="1.6"/><circle cx="1050" cy="80" r="1.2"/>
+          <circle cx="180" cy="230" r="1.2"/><circle cx="990" cy="220" r="1.3"/><circle cx="620" cy="35" r="1.5"/>
+        </g>
+        <!-- 地球球体 -->
+        <circle cx="600" cy="1060" r="760" fill="#0d1739" opacity=".95"/>
+        <circle cx="600" cy="1060" r="760" stroke="url(#bg-rim)" stroke-width="2"/>
+        <!-- 经纬网格（弧顶可见部分） -->
+        <g stroke="#7c9bff" stroke-opacity=".14">
+          <ellipse cx="600" cy="1060" rx="220" ry="760"/>
+          <ellipse cx="600" cy="1060" rx="460" ry="760"/>
+          <ellipse cx="600" cy="1060" rx="650" ry="760"/>
+          <path d="M-60 430 Q600 296 1260 430"/>
+          <path d="M-60 560 Q600 436 1260 560"/>
+        </g>
+        <!-- 交易光弧：节点间的全球链接 -->
+        <path class="arc"    d="M279 371 Q430 150 600 300" stroke="url(#bg-arc)" stroke-width="2.2" stroke-linecap="round"/>
+        <path class="arc a2" d="M600 300 Q770 150 921 371" stroke="url(#bg-arc)" stroke-width="2.2" stroke-linecap="round"/>
+        <path class="arc a3" d="M279 371 Q600 40 921 371" stroke="url(#bg-arc)" stroke-width="1.8" stroke-linecap="round"/>
+        <path class="arc a4" d="M442 317 Q600 185 758 317" stroke="url(#bg-arc)" stroke-width="1.8" stroke-linecap="round"/>
+        <path class="arc a5" d="M112 478 Q600 240 1088 478" stroke="url(#bg-arc)" stroke-width="1.6" stroke-linecap="round"/>
+        <!-- 数据节点：脉冲光环 + 实心点 -->
+        <g>
+          <circle class="halo"    cx="279" cy="371" r="11" fill="none" stroke="#7ab5ff" stroke-width="1.5"/>
+          <circle class="halo h2" cx="442" cy="317" r="11" fill="none" stroke="#7ab5ff" stroke-width="1.5"/>
+          <circle class="halo h3" cx="600" cy="300" r="13" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+          <circle class="halo h4" cx="758" cy="317" r="11" fill="none" stroke="#7ab5ff" stroke-width="1.5"/>
+          <circle class="halo h5" cx="921" cy="371" r="11" fill="none" stroke="#7ab5ff" stroke-width="1.5"/>
+          <circle cx="279" cy="371" r="4" fill="url(#bg-node)"/>
+          <circle cx="442" cy="317" r="4" fill="url(#bg-node)"/>
+          <circle cx="600" cy="300" r="5.5" fill="url(#bg-node)"/>
+          <circle cx="758" cy="317" r="4" fill="url(#bg-node)"/>
+          <circle cx="921" cy="371" r="4" fill="url(#bg-node)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <div class="hero-in">
+        <span class="hero-badge h-anim"><img class="badge-logo" src="assets/bm-logo.png" alt="壹准保卖" width="800" height="169"> · 本地B端最优出货渠道</span>
+        <h1 class="h-anim d1">壹准保卖，<br><em>机器人验机卖全球</em></h1>
+        <ul class="hero-points h-anim d2">
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4h14v12H1z"/><path d="M15 9h4l3 3v4h-7V9z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg></span>
+            <span class="pt"><b>同城速运</b><span>下单后最快半小时送达验机中心，当天下单、当天验机、当天回款</span></span>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></span>
+            <span class="pt"><b>机器人透明验机</b><span>100+ 项标准质检，3 分钟出「壹准官方验」质检报告，全程录像可追溯</span></span>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+            <span class="pt"><b>全球竞拍出高价</b><span>国内国外多渠道即时竞价，直通全球卖高价！</span></span>
+          </li>
+        </ul>
+        <div class="hero-btns h-anim d3">
+          <a class="btn btn-green" href="#bm-join">立即入驻</a>
+          <a class="btn btn-ghost" href="#bm-flow">先看流程</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 02 出货之痛（压价话术气泡卡） -->
+  <section id="bm-pain">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">01</span><span class="line"></span><span class="cat">PAIN</span></div>
+        <h2>二手老板们，你们的出货利润空间，<br>是不是一直在被<em>无形挤压</em>？</h2>
+      </div>
+      <div class="pain-grid" data-stagger>
+        <div class="pain-card reveal">
+          <span class="pno">01</span>
+          <div class="q-bubble">
+            <span class="q-ava">贩</span>
+            <span class="q-msg"><span class="q-name">本地收货商</span><p>「参考价 2000？我<b>最多给你 1600</b>，爱卖不卖。」</p></span>
+          </div>
+          <div class="p-main">
+            <span class="ptag">渠道少</span>
+            <h3>卖来卖去，就身边那几个贩子</h3>
+            <p class="why">报价全凭对方一张嘴——行业参考价 2000 一部的机器，实际成交往往只有 1600。</p>
+          </div>
+          <div class="fix"><b>壹准保卖的解法</b><span>国内国外多渠道即时竞价，价高者得；服务费限时免收。</span></div>
+        </div>
+        <div class="pain-card reveal">
+          <span class="pno">02</span>
+          <div class="q-bubble">
+            <span class="q-ava">贩</span>
+            <span class="q-msg"><span class="q-name">本地收货商</span><p>「这机子<b>有点花</b>啊，得再让点价。」</p></span>
+          </div>
+          <div class="p-main">
+            <span class="ptag">到手刀</span>
+            <h3>一到验货，毛病就来了</h3>
+            <p class="why">「到手刀」是行业老套路——买家收之前什么价都好说，拆开包装就开始挑划痕、挑进水，同批机器能被压走 10%-30%。</p>
+          </div>
+          <div class="fix"><b>壹准保卖的解法</b><span>机器人 100+ 项标准质检，3 分钟出「壹准官方验」报告，全程录像可追溯。</span></div>
+        </div>
+        <div class="pain-card reveal">
+          <span class="pno">03</span>
+          <div class="q-bubble">
+            <span class="q-ava">贩</span>
+            <span class="q-msg"><span class="q-name">本地收货商</span><p>「想卖高价？<b>自己挂网上</b>慢慢聊去。」</p></span>
+          </div>
+          <div class="p-main">
+            <span class="ptag">太麻烦</span>
+            <h3>自己开卖，又累又悬</h3>
+            <p class="why">一台一台上架、一条一条回消息，买家调包、扯皮、鸽单防不胜防；开店做流量，成本更是收不回来。</p>
+          </div>
+          <div class="fix"><b>壹准保卖的解法</b><span>寄出即脱手——质检、定价、销售、买家售后全由验机中心一站式托管，你只管等回款。</span></div>
+        </div>
+        <div class="pain-card reveal">
+          <span class="pno">04</span>
+          <div class="q-bubble">
+            <span class="q-ava">贩</span>
+            <span class="q-msg"><span class="q-name">本地收货商</span><p>「早上报的价？<b>下午就做不了数</b>了。」</p></span>
+          </div>
+          <div class="p-main">
+            <span class="ptag">行情快</span>
+            <h3>行情一天一变，出货等不起</h3>
+            <p class="why">行情掉得比出货快，货压在手一天，就亏一天。只求尽快出手、减少损失。</p>
+          </div>
+          <div class="fix"><b>壹准保卖的解法</b><span>同城最快半小时送达，当天验机、当天售出回款——货走得比行情快。</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 壹准保卖的四大保障（优势，一卡一图） -->
+  <section id="bm-adv">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">02</span><span class="line"></span><span class="cat">THE ANSWER</span></div>
+        <h2>壹准保卖的四大保障</h2>
+      </div>
+      <div class="adv-grid" data-stagger>
+        <!-- 01 极速：全宽卡 + 下单→验机→回款 演示动画 -->
+        <div class="card adv-card adv-speed reveal">
+          <div class="speed-txt">
+            <span class="adv-tag">01 极速</span>
+            <h3>今天寄出，最快今天回款</h3>
+            <p>依托本地验机中心，同城最快半小时送达；机器人 3 分钟完成质检，你认可报告后随即上架。</p>
+          </div>
+          <div class="flow-demo" aria-hidden="true">
+            <div class="fd-step fd-s1">
+              <span class="fd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg><span class="fd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+              <b>下单</b><span class="fd-sub">同城最快半小时送达</span>
+            </div>
+            <span class="fd-arrow fa-1"></span>
+            <div class="fd-step fd-s2">
+              <span class="fd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M12 7V3.5"/><circle cx="12" cy="2.8" r="1.2"/><path d="M8.5 12.5h.01M15.5 12.5h.01"/><path d="M9 16h6"/></svg><span class="fd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+              <b>验机+上架</b><span class="fd-sub">3分钟完成机器人质检，随即上架竞拍</span>
+            </div>
+            <span class="fd-arrow fa-2"></span>
+            <div class="fd-step fd-s3">
+              <span class="fd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15.5 9.5c-.7-1-1.9-1.5-3.5-1.5-1.9 0-3 .9-3 2s1 1.7 3 2 3 .9 3 2-1.1 2-3 2c-1.6 0-2.8-.5-3.5-1.5"/></svg><span class="fd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+              <b>回款</b><span class="fd-sub">货款当天到账</span>
+            </div>
+          </div>
+        </div>
+        <!-- 02 高价 -->
+        <div class="card adv-card reveal">
+          <span class="adv-tag">02 高价</span>
+          <h3>国内国外多渠道即时竞价销售</h3>
+          <p>按你的期望价智能动态定价，全球回收商的 AI 买手即时竞价！——直通全球，卖高价！</p>
+          <figure class="adv-img img-contain"><img src="assets/bm-globe.png" alt="全球买家网络：AI 买手跨区域即时竞价" loading="lazy" width="1280" height="789"></figure>
+        </div>
+        <!-- 03 透明 -->
+        <div class="card adv-card reveal">
+          <span class="adv-tag">03 透明</span>
+          <h3>AI机器人提供「壹准官方验」</h3>
+          <p>所有质检项均由 AI 机器人完成，全国统一标准，保障质检结果稳定一致，并同步出具「壹准官方验」质检报告；物流、拆包、质检、定价全程录像可追溯。</p>
+          <figure class="adv-img img-contain"><img src="assets/bm-robot.png" alt="壹准验机机器人与「壹准官方验」质检报告" loading="lazy" width="1100" height="1023"></figure>
+        </div>
+        <!-- 04 省心 -->
+        <div class="card adv-card reveal">
+          <span class="adv-tag">04 省心</span>
+          <h3>寄出后，你坐等回款即可</h3>
+          <p>卖家在小程序下单并寄出（或自送）后，即可完全「脱手」；质检、定价、销售、买家售后全由验机中心一站式全包托管，您只管等回款。</p>
+          <figure class="adv-img img-contain"><img src="assets/bm-ease.png" alt="寄出脱手：货款直达钱包，坐等回款" loading="lazy" width="1280" height="789"></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 适合谁 -->
+  <section id="bm-who">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">03</span><span class="line"></span><span class="cat">WHO</span></div>
+        <h2>壹准保卖，适合哪些商家</h2>
+      </div>
+      <div class="grid grid-3" data-stagger>
+        <div class="card reveal"><span class="big-no">A</span><h3>同城二手手机商家</h3><p>KA 商家、二手门店/小店、小 B 商家。</p></div>
+        <div class="card reveal"><span class="big-no">B</span><h3>有一定的稳定货源的商家</h3><p>手头有一定库存量或较为稳定的货源，需要稳定、高效出货通道的商家。</p></div>
+        <div class="card reveal"><span class="big-no">C</span><h3>想卖得更高、更快、更省心的商家</h3><p>不想被同行回收商到手刀、扯皮，希望多渠道比价、快速回款。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 上手流程（与《商家交易规范》流程一致） -->
+  <section id="bm-flow">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">04</span><span class="line"></span><span class="cat">HOW IT WORKS</span></div>
+        <h2>六步上手，寄出就<em>撒手</em></h2>
+      </div>
+      <div class="flow reveal">
+        <div class="fstep"><span class="no">STEP 1</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>注册账号</b><span>微信搜索壹准保卖小程序，根据提示完成注册</span></div>
+        <div class="fstep"><span class="no">STEP 2</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>快捷下单</b><span>开通卖家钱包并下单</span></div>
+        <div class="fstep"><span class="no">STEP 3</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5h14v11H1z"/><path d="M15 9h4l3 3v4h-7V9z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg>同城速运</b><span>可选快速寄出或自送（快速寄出最快半小时送达验机中心）</span></div>
+        <div class="fstep"><span class="no">STEP 4</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M12 7V3M8 3h8"/><path d="M9 13l2 2 4-4"/></svg>机器人质检</b><span>3分钟即可出具「壹准官方验」质检报告，质检全程录像可追溯</span></div>
+        <div class="fstep"><span class="no">STEP 5</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>质检后即时竞价</b><span>商家确认质检结果后，系统随即按期望价上架，全球多渠道即时竞价</span></div>
+        <div class="fstep"><span class="no">STEP 6</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5c0-1 1-1.7 2.5-1.7s2.5.7 2.5 1.7-1 1.5-2.5 1.8-2.5.8-2.5 1.8 1 1.7 2.5 1.7 2.5-.7 2.5-1.7"/></svg>售出回款</b><span>货款直达卖家钱包，当天到账</span></div>
+      </div>
+      <p class="reveal" style="margin-top:14px;font-size:13px;color:var(--faint)">对报告有异议？签收后 24 小时内可申请复检 1 次，复检通过将更新报告与实时价格。</p>
+    </div>
+  </section>
+
+  <!-- 06 规则要点（提炼自飞书《壹准保卖商家交易规范规则》《商家取消代卖规则》《商家违规处罚规则》） -->
+  <section id="bm-rules">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">05</span><span class="line"></span><span class="cat">RULES</span></div>
+        <h2>合作规则，提前了解<em>更安心</em></h2>
+        <p class="sec-desc">关键要点整理如下，有疑问可随时咨询确认。</p>
+      </div>
+      <div class="rules reveal">
+        <div class="rule-item"><span class="k">交易服务费</span><span class="v">竞价拍机渠道<b>暂免</b>；第三方同售渠道待开通后另行公布。</span></div>
+        <div class="rule-item"><span class="k">质检服务费</span><span class="v">交易成功<b>免收</b>。仅商家主动取消订单、或因商家原因交易失败退回货品时，按 <b>5 元/台</b> 收取。</span></div>
+        <div class="rule-item"><span class="k">业务保证金</span><span class="v">交易前商家账户需<b>足额缴纳业务保证金</b>（有补贴或免除政策的情况除外）；违规罚款等平台有权从账户余额中直接扣除。</span></div>
+        <div class="rule-item"><span class="k">报告与复检</span><span class="v">运营中心签收后 <b>48 小时内</b>出具检测报告及参考回收价；有异议可在 <b>24 小时内申请复检 1 次</b>（48 小时内审核，通过即更新报告与实时价格）；检测不通过可 24 小时内发起申诉，由平台介入裁决。</span></div>
+        <div class="rule-item"><span class="k">确认时效与库龄</span><span class="v">报告出具后 <b>15 天内</b>确认出售（竞价拍机 / 第三方同售，售价可参考检测价调整），或终止交易退回；库龄超 20 天平台定时提醒，超 <b>60 天</b>未确认的，平台有权按上拍当天参考价自动上拍，跌价损失由商家承担。</span></div>
+        <div class="rule-item"><span class="k">隐私清除</span><span class="v">隐私清理<b>不在质检范围内</b>：寄出前请自行清除照片/聊天记录、退出账号与全部密码、取出 SIM 卡和存储卡；未清除导致的纠纷由商家承担，相关卡体平台将统一拆除销毁。</span></div>
+        <div class="rule-item"><span class="k">发货规范与留证</span><span class="v">寄往运营中心的运费由商家承担；需按规范打包（气泡膜+纸箱+订单号+防水膜）、在平台创建发货单，快递手机号须与注册手机号一致；发货前请留存机器外观、IMEI、功能测试视频等<b>证据</b>，产生争议时供平台核验。竞价拍机售出的订单，发往买家的运费由<b>买家承担</b>，商家不用出。</span></div>
+        <div class="rule-item"><span class="k">禁卖与有责退货</span><span class="v">山寨机、丢失模式机、序列号异常机、监管机、有 ID/有锁机等<b>禁止交易</b>，发现即拒收退回（运费商家承担）；拆修机、虚假发货等问题属「商家有责退货」，须无条件退货退款并承担相应平台运营成本。</span></div>
+        <div class="rule-item"><span class="k">取消与退回</span><span class="v">售出前可申请取消保卖（质检服务费照扣）；退回运费由商家承担，默认运费到付，费用结算后约 2 个工作日内寄出。</span></div>
+        <div class="rule-item"><span class="k">违规处罚</span><span class="v">一般违规 <b>50 元/单</b>起（虚假交易按订单金额 10%），严重违规 3 倍、极其严重违规 10 倍罚款；收到通知 <b>72 小时内</b>可申诉，超期视为接受处罚。</span></div>
+      </div>
+      <p class="risk-note">相关完整规则以壹准保卖小程序内最新公示版本为准。</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="bm-join">
+    <div class="wrap reveal">
+      <div class="join-card">
+        <div class="qr-box" aria-label="壹准保卖小程序码">
+          <img src="assets/qr-bm.jpg" alt="壹准保卖小程序码" loading="lazy">
+        </div>
+        <div>
+          <h3>开通壹准保卖</h3>
+          <p class="sub">扫码进入壹准保卖小程序，点击“点击注册”。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /view-baomai -->
+
+<!-- ================================================================
+     ③ 壹准拍机子页 view-paiji
+     结构：Hero → 采货之痛 → 拍机的答案 → 适合谁 → 上手流程 → 规则要点
+================================================================ -->
+<div id="view-paiji" hidden>
+  <header class="hero hero-edit">
+    <div class="hero-globe hero-flow" aria-hidden="true">
+      <svg viewBox="0 0 1200 560" fill="none">
+        <defs>
+          <radialGradient id="pj-bg-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#006FFF" stop-opacity=".26"/>
+            <stop offset="55%" stop-color="#0b3fa8" stop-opacity=".1"/>
+            <stop offset="100%" stop-color="#0b1021" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="pj-hub-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#3d8bff" stop-opacity=".5"/>
+            <stop offset="45%" stop-color="#006FFF" stop-opacity=".2"/>
+            <stop offset="100%" stop-color="#0b1021" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="pj-bg-node" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#e2ebff"/>
+            <stop offset="100%" stop-color="#3d8bff"/>
+          </radialGradient>
+        </defs>
+        <ellipse cx="600" cy="400" rx="820" ry="230" fill="url(#pj-bg-glow)"/>
+        <g fill="#aebcff" opacity=".3">
+          <circle cx="150" cy="110" r="1.6"/><circle cx="320" cy="55" r="1.2"/><circle cx="540" cy="130" r="1.4"/>
+          <circle cx="720" cy="65" r="1.2"/><circle cx="890" cy="120" r="1.6"/><circle cx="1055" cy="70" r="1.2"/>
+          <circle cx="200" cy="220" r="1.2"/><circle cx="1000" cy="210" r="1.3"/><circle cx="630" cy="30" r="1.5"/>
+        </g>
+        <!-- 货源汇流：六条微光流线汇向中心智采枢纽 -->
+        <g stroke="#7ab5ff" stroke-opacity=".15" stroke-width="1.2">
+          <path id="pjf-1" d="M-60 150 C300 180 500 300 600 400"/>
+          <path id="pjf-2" d="M-60 320 C280 340 470 360 600 400"/>
+          <path id="pjf-3" d="M120 55 C370 120 540 280 600 400"/>
+          <path id="pjf-4" d="M1260 150 C900 180 700 300 600 400"/>
+          <path id="pjf-5" d="M1260 320 C920 340 730 360 600 400"/>
+          <path id="pjf-6" d="M1080 55 C830 120 660 280 600 400"/>
+        </g>
+        <g class="fdot"><circle r="6" fill="#9cc8ff" opacity=".18"/><circle r="3" fill="#bcd6ff" opacity=".9"/><animateMotion dur="8.5s" begin="-2s" repeatCount="indefinite"><mpath href="#pjf-1"/></animateMotion></g>
+        <g class="fdot"><circle r="6" fill="#9cc8ff" opacity=".18"/><circle r="2.8" fill="#bcd6ff" opacity=".85"/><animateMotion dur="10.5s" begin="-5s" repeatCount="indefinite"><mpath href="#pjf-2"/></animateMotion></g>
+        <g class="fdot"><circle r="6" fill="#9cc8ff" opacity=".18"/><circle r="2.8" fill="#bcd6ff" opacity=".85"/><animateMotion dur="7.5s" begin="-1s" repeatCount="indefinite"><mpath href="#pjf-3"/></animateMotion></g>
+        <g class="fdot"><circle r="6" fill="#9cc8ff" opacity=".18"/><circle r="3" fill="#bcd6ff" opacity=".9"/><animateMotion dur="9.5s" begin="-3.5s" repeatCount="indefinite"><mpath href="#pjf-4"/></animateMotion></g>
+        <g class="fdot"><circle r="6" fill="#9cc8ff" opacity=".18"/><circle r="2.8" fill="#bcd6ff" opacity=".85"/><animateMotion dur="11s" begin="-7s" repeatCount="indefinite"><mpath href="#pjf-5"/></animateMotion></g>
+        <g class="fdot"><circle r="6" fill="#9cc8ff" opacity=".18"/><circle r="2.8" fill="#bcd6ff" opacity=".85"/><animateMotion dur="8s" begin="-4.5s" repeatCount="indefinite"><mpath href="#pjf-6"/></animateMotion></g>
+        <!-- 中心枢纽：货源汇入点，光晕+克制涟漪 -->
+        <g>
+          <circle cx="600" cy="400" r="110" fill="url(#pj-hub-glow)"/>
+          <circle cx="600" cy="400" r="14" stroke="#7ab5ff" stroke-width="1.2" fill="none" stroke-opacity="0">
+            <animate attributeName="r" values="14;74" dur="3.8s" repeatCount="indefinite"/>
+            <animate attributeName="stroke-opacity" values=".5;0" dur="3.8s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="600" cy="400" r="14" stroke="#7ab5ff" stroke-width="1.2" fill="none" stroke-opacity="0">
+            <animate attributeName="r" values="14;74" dur="3.8s" begin="1.9s" repeatCount="indefinite"/>
+            <animate attributeName="stroke-opacity" values=".5;0" dur="3.8s" begin="1.9s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="600" cy="400" r="7.5" fill="url(#pj-bg-node)"/>
+          <circle cx="600" cy="400" r="3.2" fill="#eaf1ff"/>
+        </g>
+      </svg>
+    </div>
+    <div class="wrap">
+      <div class="hero-in">
+        <span class="hero-badge h-anim"><img class="badge-logo" src="assets/pj-logo.png" alt="壹准拍机" width="800" height="182"> · B端智能竞拍采货平台</span>
+        <h1 class="h-anim d1">壹准拍机，<br><em>全球标准货源，本地无忧智采</em></h1>
+        <ul class="hero-points h-anim d2">
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+            <span class="pt"><b>海量源头货源</b><span>全球多渠道源头货源，智能算法优先推荐本地好货</span></span>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="12" rx="2"/><path d="M12 7V3M8 3h8"/><path d="M9 13l2 2 4-4"/></svg></span>
+            <span class="pt"><b>AI机器人官方验</b><span>一机一验，见报告如见真机，让商家无报价顾虑</span></span>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/><path d="M9.5 12l1.8 1.8 3.2-3.6"/></svg></span>
+            <span class="pt"><b>AI智采</b><span>AI报价采购师 7 x 24 自动出价，无人工成本且不漏单</span></span>
+          </li>
+        </ul>
+        <div class="hero-btns h-anim d3">
+          <a class="btn btn-green" href="#pj-join">立即入驻</a>
+          <a class="btn btn-ghost" href="#pj-flow">先看流程</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 01 采货之痛（话术气泡卡） -->
+  <section id="pj-pain">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">01</span><span class="line"></span><span class="cat">PAIN</span></div>
+        <h2>每天看似都在赚，月底却没剩多少？<br>你的利润，正在被<em>采货环节</em>疯狂吃掉</h2>
+      </div>
+      <div class="pain-grid" data-stagger>
+        <div class="pain-card reveal">
+          <span class="pno">01</span>
+          <div class="q-bubble">
+            <span class="q-ava">商</span>
+            <span class="q-msg"><span class="q-name">本地手机店老板</span><p>「收一台炸弹机，<b>半个月白干</b>。」</p></span>
+          </div>
+          <div class="p-main">
+            <span class="ptag">怕踩坑</span>
+            <h3>一台问题机，利润全填进去</h3>
+            <p class="why">暗病机、脏机、改码机防不胜防，售后纠纷还伤客情；报价时不得不预留容错空间，利润越摊越薄。</p>
+          </div>
+          <div class="fix"><b>壹准拍机的解法</b><span>壹准官方验从源头拦截问题机，无需预留容错空间，消除报价顾虑。</span></div>
+        </div>
+        <div class="pain-card reveal">
+          <span class="pno">02</span>
+          <div class="q-bubble">
+            <span class="q-ava">商</span>
+            <span class="q-msg"><span class="q-name">本地手机店老板</span><p>「昨晚那台好货，<b>又没抢过</b>同行。」</p></span>
+          </div>
+          <div class="p-main">
+            <span class="ptag">抢不到</span>
+            <h3>好货靠蹲？蹲也蹲不到</h3>
+            <p class="why">逐台盯行情、手动算报价，人不能 24 小时守着；夜间和节假日上场的好货，永远轮不到你。</p>
+          </div>
+          <div class="fix"><b>壹准拍机的解法</b><span>AI 报价采购师按你的策略 7×24 自动出价找货——安心睡觉，AI帮你抢货。</span></div>
+        </div>
+        <div class="pain-card reveal">
+          <span class="pno">03</span>
+          <div class="q-bubble">
+            <span class="q-ava">商</span>
+            <span class="q-msg"><span class="q-name">本地手机店老板</span><p>「客户急单要货？<b>还得等外地快递</b>。」</p></span>
+          </div>
+          <div class="p-main">
+            <span class="ptag">等不起</span>
+            <h3>找货靠人脉，到货靠运气</h3>
+            <p class="why">渠道货源不稳，急单时四处打电话、发朋友圈找货；即便找到了，等快递也得3-5天，客户早就跑了。</p>
+          </div>
+          <div class="fix"><b>壹准拍机的解法</b><span>海量货源，本地优先，每天超千台上拍，且支持本地同行调货。</span></div>
+        </div>
+        <div class="pain-card reveal">
+          <span class="pno">04</span>
+          <div class="q-bubble">
+            <span class="q-ava">商</span>
+            <span class="q-msg"><span class="q-name">本地手机店老板</span><p>「<b>这手机是人验的吧</b>？我不敢全信。」</p></span>
+          </div>
+          <div class="p-main">
+            <span class="ptag">报告水</span>
+            <h3>人工验机，因人而异</h3>
+            <p class="why">人工质检「标准不一、主观性强」，同一个机不同人验出不同结果；收到货还得自己再验一遍，容错成本全在自己身上。</p>
+          </div>
+          <div class="fix"><b>壹准拍机的解法</b><span>AI 机器人标准验机，始终稳定一致；一机一检一报告，全国统一标准，见报告如见真机。</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 壹准拍机的双重保障 -->
+  <section id="pj-adv">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">02</span><span class="line"></span><span class="cat">THE ANSWER</span></div>
+        <h2>壹准拍机的双重保障</h2>
+      </div>
+      <div class="adv-grid adv-grid-2" data-stagger>
+        <!-- 01 货多：海量货源，本地优先（货源汇流动画） -->
+        <div class="card adv-card reveal">
+          <span class="adv-tag">01</span>
+          <h3>海量货源，本地优先</h3>
+          <p>海量多渠道源头货源：涵盖全国各大通讯零售连锁门店、三大运营商门店、壹准bot速收C端用户、壹准保卖同行商家、全球各大交易市场；智能算法优先推荐商家所在地的本地货源，更低成本、更高效率采到所需货品。</p>
+          <figure class="adv-img adv-anim">
+            <div class="src-flow" aria-hidden="true">
+              <svg viewBox="0 0 640 300" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <radialGradient id="pjsf-halo" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="rgba(0,111,255,.42)"/>
+                    <stop offset="100%" stop-color="rgba(0,111,255,0)"/>
+                  </radialGradient>
+                </defs>
+                <g class="sf-lines">
+                  <path class="sf-dim" d="M320,24 C306,49 306,89 320,114"/>
+                  <path class="sf-dim" d="M449,36 C410,48 361,84 338,118"/>
+                  <path class="sf-dim" d="M553,71 C493,74 405,98 353,128"/>
+                  <path class="sf-dim" d="M611,122 C540,114 430,122 361,142"/>
+                  <path class="sf-dim" d="M611,178 C542,158 432,150 361,158"/>
+                  <path class="sf-dim" d="M553,229 C501,199 413,175 353,172"/>
+                  <path class="sf-dim" d="M449,264 C426,230 378,194 338,182"/>
+                  <path class="sf-dim" d="M320,276 C334,251 334,211 320,186"/>
+                  <path class="sf-dim" d="M191,264 C230,252 279,216 302,182"/>
+                  <path class="sf-dim" d="M87,229 C147,226 235,202 287,172"/>
+                  <path class="sf-dim" d="M29,178 C100,186 210,178 279,158"/>
+                  <path class="sf-dim" d="M29,122 C98,142 208,150 279,142"/>
+                  <path class="sf-dim" d="M87,71 C139,101 227,125 287,128"/>
+                  <path class="sf-dim" d="M191,36 C214,70 262,106 302,118"/>
+                </g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.48s" repeatCount="indefinite" begin="-0.00s" path="M320,24 C306,49 306,89 320,114"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.00s" repeatCount="indefinite" begin="-2.13s" path="M449,36 C410,48 361,84 338,118"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="4.12s" repeatCount="indefinite" begin="-0.14s" path="M553,71 C493,74 405,98 353,128"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.64s" repeatCount="indefinite" begin="-2.75s" path="M611,122 C540,114 430,122 361,142"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.16s" repeatCount="indefinite" begin="-2.20s" path="M611,178 C542,158 432,150 361,158"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="4.28s" repeatCount="indefinite" begin="-2.09s" path="M553,229 C501,199 413,175 353,172"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.80s" repeatCount="indefinite" begin="-1.38s" path="M449,264 C426,230 378,194 338,182"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.32s" repeatCount="indefinite" begin="-1.63s" path="M320,276 C334,251 334,211 320,186"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="4.44s" repeatCount="indefinite" begin="-3.72s" path="M191,264 C230,252 279,216 302,182"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.96s" repeatCount="indefinite" begin="-3.33s" path="M87,229 C147,226 235,202 287,172"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.48s" repeatCount="indefinite" begin="-0.42s" path="M29,178 C100,186 210,178 279,158"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.00s" repeatCount="indefinite" begin="-2.43s" path="M29,122 C98,142 208,150 279,142"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="4.12s" repeatCount="indefinite" begin="-0.84s" path="M87,71 C139,101 227,125 287,128"/></g>
+                <g class="sfd"><circle r="8" fill="rgba(0,111,255,.22)"/><circle r="3" fill="#7ab5ff"/><animateMotion dur="3.64s" repeatCount="indefinite" begin="-2.21s" path="M191,36 C214,70 262,106 302,118"/></g>
+                <circle cx="320" cy="150" r="56" fill="url(#pjsf-halo)"/>
+                <circle class="sf-ripple" cx="320" cy="150" r="12" fill="none" stroke="rgba(0,111,255,.5)" stroke-width="1.5">
+                  <animate attributeName="r" values="14;52" dur="3.6s" repeatCount="indefinite" begin="0s"/>
+                  <animate attributeName="opacity" values=".55;0" dur="3.6s" repeatCount="indefinite" begin="0s"/>
+                </circle>
+                <circle class="sf-ripple" cx="320" cy="150" r="12" fill="none" stroke="rgba(0,111,255,.5)" stroke-width="1.5">
+                  <animate attributeName="r" values="14;52" dur="3.6s" repeatCount="indefinite" begin="-1.8s"/>
+                  <animate attributeName="opacity" values=".55;0" dur="3.6s" repeatCount="indefinite" begin="-1.8s"/>
+                </circle>
+                <g class="sf-pin" transform="translate(320,158)">
+                  <path d="M0,0 C0,0 -18,-14 -18,-25 A18,18 0 1 1 18,-25 C18,-14 0,0 0,0 Z" fill="#006FFF"/>
+                  <circle cx="0" cy="-25" r="6.5" fill="#0b1021"/>
+                </g>
+              </svg>
+            </div>
+          </figure>
+        </div>
+        <!-- 02 透明：标准验机，所见即所得（手机进机器→出质检报告 动画） -->
+        <div class="card adv-card reveal">
+          <span class="adv-tag">02</span>
+          <h3>标准验机，所见即所得</h3>
+          <p>每台手机均通过 AI 机器人标准验机，生成稳定一致、权威可信的「壹准官方验」质检报告，实时同步至商品详情页，所见即所得；从源头杜绝炸弹机、问题机等行业顽疾，无需预留容错空间，消除报价顾虑。</p>
+          <figure class="adv-img adv-anim">
+            <div class="chk-flow" aria-hidden="true">
+              <svg class="cf-phone" viewBox="0 0 26 46"><rect x="1.5" y="1.5" width="23" height="43" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10" y="6" width="6" height="2.4" rx="1.2" fill="currentColor" opacity=".7"/></svg>
+              <div class="cf-machine">
+                <img src="assets/pj-robot.png" alt="壹准验机机器人" loading="lazy">
+              </div>
+              <div class="cf-report">
+                <img src="assets/pj-report.png" alt="壹准官方验质检报告" loading="lazy">
+                <span class="cf-stamp"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></span>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 让买家更省心，采货更简单 -->
+  <section id="pj-ease">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">03</span><span class="line"></span><span class="cat">EASY</span></div>
+        <h2>壹准拍机，让买家<em>更省心</em>，采货更简单</h2>
+      </div>
+      <!-- 关于智能：全宽卡 + 配置→AI出价→看结果 演示动画 -->
+      <div class="card adv-card adv-speed reveal" style="margin-bottom:16px">
+        <div class="speed-txt">
+          <span class="adv-tag">关于智能</span>
+          <h3>AI 智能找货模式，无人工成本且不漏单</h3>
+          <p>支持配置采购任务，生成定制化 AI 报价采购师，通过智能出价竞拍，实现全自动智能采货。老板尽在掌控，只需查看推送的质检报告。</p>
+        </div>
+        <div class="flow-demo" aria-hidden="true">
+          <div class="fd-step fd-s1">
+            <span class="fd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="fd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+            <b>配置采购任务</b><span class="fd-sub">报价策略、货源需求等</span>
+          </div>
+          <span class="fd-arrow fa-1"></span>
+          <div class="fd-step fd-s2">
+            <span class="fd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="7" width="14" height="11" rx="3"/><path d="M12 4v3M9.5 12h.01M14.5 12h.01M9 15.5h6"/></svg><span class="fd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+            <b>AI 智能出价竞拍</b><span class="fd-sub">AI报价采购师支持全自动竞拍</span>
+          </div>
+          <span class="fd-arrow fa-2"></span>
+          <div class="fd-step fd-s3">
+            <span class="fd-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M9 7h6M9 10.5h6M9 14h4"/><path d="M11 18.5h2"/></svg><span class="fd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+            <b>查看采购结果</b><span class="fd-sub">老板只需查看质检报告</span>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-3" data-stagger>
+        <div class="card adv-card reveal">
+          <span class="adv-tag">关于场次</span>
+          <h3>多种模式玩法，<br>每天超千台上拍</h3>
+          <p>每台手机预留充足可报价时间，无需蹲守，节省人力；每个场次均匹配各个机型的上拍机，满足商家在任意场次都能采到所需货品。</p>
+          <figure class="adv-img adv-ui">
+            <svg class="ui-svg" viewBox="0 0 360 170" aria-hidden="true">
+              <g transform="translate(180 85) scale(1.25) translate(-180 -85)">
+              <circle cx="180" cy="85" r="52" class="ic-ring"/><circle cx="180" cy="85" r="72" class="ic-ring2"/>
+              <rect x="150" y="46" width="60" height="70" rx="9" class="ic-l"/>
+              <line x1="150" y1="64" x2="210" y2="64" class="ic-l"/>
+              <line x1="166" y1="40" x2="166" y2="52" class="ic-l"/>
+              <line x1="194" y1="40" x2="194" y2="52" class="ic-l"/>
+              <circle cx="168" cy="80" r="3" class="ic-dot"/><circle cx="180" cy="80" r="3" class="ic-dot"/><circle cx="192" cy="80" r="3" class="ic-dot"/>
+              <circle cx="168" cy="94" r="3" class="ic-dot"/><circle cx="180" cy="94" r="3.5" class="ic-b"/><circle cx="192" cy="94" r="3" class="ic-dot"/>
+              <circle cx="168" cy="108" r="3" class="ic-dot"/><circle cx="180" cy="108" r="3" class="ic-dot"/>
+              <circle cx="208" cy="114" r="16" fill="#0b1021" stroke="#006FFF" stroke-width="2"/>
+              <path d="M208 106v8l6 4" class="ic-l"/>
+                          </g>
+            </svg>
+          </figure>
+        </div>
+        <div class="card adv-card reveal">
+          <span class="adv-tag">关于专区</span>
+          <h3>根据商家多元需求，<br>量身定制竞拍专区</h3>
+          <p>平台目前具有暗拍专区与自由市场，满足不同商家在出价、成本控制、采货量等的不同需求；不同专区货源按序上拍，没有等级差异。</p>
+          <figure class="adv-img adv-ui">
+            <svg class="ui-svg" viewBox="0 0 360 170" aria-hidden="true">
+              <g transform="translate(180 85) scale(1.25) translate(-180 -85)">
+              <circle cx="180" cy="85" r="52" class="ic-ring"/><circle cx="180" cy="85" r="72" class="ic-ring2"/>
+              <g transform="rotate(-10 150 85)"><rect x="122" y="53" width="48" height="64" rx="8" class="ic-d"/></g>
+              <g transform="rotate(10 210 85)"><rect x="190" y="53" width="48" height="64" rx="8" class="ic-d"/></g>
+              <rect x="156" y="49" width="48" height="72" rx="8" class="ic-f"/>
+              <rect x="156" y="49" width="48" height="72" rx="8" class="ic-l"/>
+              <circle cx="180" cy="70" r="4" class="ic-b"/>
+              <line x1="168" y1="86" x2="192" y2="86" class="ic-d"/>
+              <line x1="168" y1="98" x2="188" y2="98" class="ic-d"/>
+                          </g>
+            </svg>
+          </figure>
+        </div>
+        <div class="card adv-card reveal">
+          <span class="adv-tag">关于出价</span>
+          <h3>遵循价高者得原则，<br>全程公平透明</h3>
+          <p>人工出价场景下，平台基于市场动态行情及 AI 分析，提供起拍价及出价参考，帮忙商家更精准出价；场次结束前支持随时改价，竞拍结果遵循「价高者得」原则。</p>
+          <figure class="adv-img adv-ui">
+            <svg class="ui-svg" viewBox="0 0 360 170" aria-hidden="true">
+              <g transform="translate(180 85) scale(1.25) translate(-180 -85)">
+              <circle cx="180" cy="85" r="52" class="ic-ring"/><circle cx="180" cy="85" r="72" class="ic-ring2"/>
+              <rect x="146" y="92" width="14" height="30" rx="3" class="ic-f"/>
+              <rect x="168" y="78" width="14" height="44" rx="3" class="ic-f"/>
+              <rect x="190" y="60" width="14" height="62" rx="3" class="ic-b"/>
+              <path d="M142 98L214 54" class="ic-l"/>
+              <path d="M214 54l-14 .7m14-.7l-6.4 12.4" class="ic-l"/>
+                          </g>
+            </svg>
+          </figure>
+        </div>
+        <div class="card adv-card reveal">
+          <span class="adv-tag">关于报告</span>
+          <h3>一机一检一报告，<br>稳定一致权威可靠</h3>
+          <p>每台手机均通过 AI 机器人标准质检，并出具「壹准官方验」质检报告，清晰呈现真实机况：基础信息、外观功能等级、多角度实拍图、质检明细项目等。</p>
+          <figure class="adv-img adv-ui">
+            <svg class="ui-svg" viewBox="0 0 360 170" aria-hidden="true">
+              <g transform="translate(180 85) scale(1.25) translate(-180 -85)">
+              <circle cx="180" cy="85" r="52" class="ic-ring"/><circle cx="180" cy="85" r="72" class="ic-ring2"/>
+              <rect x="150" y="44" width="60" height="78" rx="9" class="ic-l"/>
+              <line x1="162" y1="62" x2="198" y2="62" class="ic-d"/>
+              <line x1="162" y1="76" x2="198" y2="76" class="ic-d"/>
+              <line x1="162" y1="90" x2="186" y2="90" class="ic-d"/>
+              <circle cx="212" cy="116" r="16" class="ic-b"/>
+              <text x="212" y="121.5" class="ic-w" font-size="15" font-weight="700" text-anchor="middle">A</text>
+                          </g>
+            </svg>
+          </figure>
+        </div>
+        <div class="card adv-card reveal">
+          <span class="adv-tag">关于售后</span>
+          <h3>全流程标准透明+<br>完善售后机制</h3>
+          <p>平台基于 AI 机器人标准验机及全流程透明化工序，从源头解决众多常见售后问题；商家可通过合理举证，快速获得补差、退货等售后服务，确保售后无忧。</p>
+          <figure class="adv-img adv-ui">
+            <svg class="ui-svg" viewBox="0 0 360 170" aria-hidden="true">
+              <g transform="translate(180 85) scale(1.25) translate(-180 -85)">
+              <circle cx="180" cy="85" r="52" class="ic-ring"/><circle cx="180" cy="85" r="72" class="ic-ring2"/>
+              <path d="M180 46l27 10v23c0 19-12 30-27 37-15-7-27-18-27-37V56z" class="ic-l"/>
+              <path d="M169 84l9 9 16-18" class="ic-l"/>
+              <circle cx="216" cy="50" r="14" fill="#0b1021" stroke="#006FFF" stroke-width="2"/>
+              <path d="M209.5 50a6.5 6.5 0 0 1 11.2-4.5" class="ic-l"/>
+              <path d="M222.5 50a6.5 6.5 0 0 1-11.2 4.5" class="ic-l"/>
+              <path d="M220.7 42.5v3h-3" class="ic-l"/>
+              <path d="M211.3 57.5v-3h3" class="ic-l"/>
+                          </g>
+            </svg>
+          </figure>
+        </div>
+        <div class="card adv-card reveal">
+          <span class="adv-tag">关于收费</span>
+          <h3>低于市场普遍标准，<br>售后成功费用可全退</h3>
+          <p>仅收取维持平台常规运营所需的交易服务费及运费，且低于市场普遍收费标准。</p>
+          <figure class="adv-img adv-ui">
+            <svg class="ui-svg" viewBox="0 0 360 170" aria-hidden="true">
+              <g transform="translate(180 85) scale(1.25) translate(-180 -85)">
+              <circle cx="180" cy="85" r="52" class="ic-ring"/><circle cx="180" cy="85" r="72" class="ic-ring2"/>
+              <path d="M144 106v14c0 5.5 11.6 10 26 10s26-4.5 26-10v-14" class="ic-l"/>
+              <ellipse cx="170" cy="106" rx="26" ry="10" class="ic-l"/>
+              <ellipse cx="170" cy="94" rx="26" ry="10" class="ic-f"/>
+              <ellipse cx="170" cy="94" rx="26" ry="10" class="ic-l"/>
+              <circle cx="216" cy="64" r="16" class="ic-b"/>
+              <text x="216" y="69.5" class="ic-w" font-size="15" font-weight="700" text-anchor="middle">%</text>
+              <path d="M216 86v16m0 0l-6-6m6 6l6-6" class="ic-d"/>
+                          </g>
+            </svg>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 适合谁 -->
+  <section id="pj-who">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">04</span><span class="line"></span><span class="cat">WHO</span></div>
+        <h2>壹准拍机，适合哪些商家</h2>
+      </div>
+      <div class="grid grid-3" data-stagger>
+        <div class="card reveal"><span class="big-no">A</span><h3>想转行做二手的商家</h3><p>正做新机生意或 KA 渠道，想切入二手：没有验机师傅、没有现成货源也能起步——全国统一标准报告，见报告如见真机，直接开买。</p></div>
+        <div class="card reveal"><span class="big-no">B</span><h3>二手回收商（小 B / 中 B / 大 B）</h3><p>以回收、批售为业，看重周转与吞吐量，不纠结单台得失——每天超千台源头货源持续上拍，渠道稳定，采购量越大成本优势越明显。</p></div>
+        <div class="card reveal"><span class="big-no">C</span><h3>二手门店（夫妻店、小店）</h3><p>靠日常补货卖货，最怕急单断货——本地货源优先匹配，支持同行调货、同城最快 1 小时交接，快速便捷采购，稳稳接住客人。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 上手流程 -->
+  <section id="pj-flow">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">05</span><span class="line"></span><span class="cat">HOW IT WORKS</span></div>
+        <h2>六步上手，采货<em>不用盯</em></h2>
+      </div>
+      <div class="pflow reveal">
+        <div class="fstep"><span class="no">STEP 1</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>注册账号</b><span>微信搜索壹准拍机小程序，按提示完成入驻</span></div>
+        <div class="fstep"><span class="no">STEP 2</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>钱包充值</b><span>开通买家钱包并充值，以及缴纳保证金。</span></div>
+        <div class="pf-tabs" role="tablist" aria-label="采货模式切换">
+          <button class="pf-tab" data-mode="manual" type="button" role="tab">人工竞拍模式</button>
+          <button class="pf-tab active" data-mode="ai" type="button" role="tab">AI智采模式</button>
+        </div>
+        <div class="pf-zone">
+          <div class="pf-mode" data-mode="manual">
+            <span class="adv-tag pf-tag">人工竞拍模式</span>
+            <div class="fstep"><span class="no">STEP 3</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="2.5" width="9" height="17" rx="2"/><path d="M7 16.5h2"/><circle cx="16" cy="14" r="4.5"/><path d="M19.5 17.5L22 20"/></svg>挑选手机</b><span>选择卖场及场次，选择合适的手机并查看质检报告。</span></div>
+            <div class="fstep"><span class="no">STEP 4</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>出价竞拍</b><span>根据起拍价及自身销售策略进行出价，场次结束前支持随时改价。</span></div>
+          </div>
+          <div class="pf-mode pf-mode-ai active" data-mode="ai">
+            <span class="adv-tag pf-tag">AI智采模式</span>
+            <div class="fstep"><span class="no">STEP 3</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h9M19 7.5h1M4 16.5h3M13 16.5h7"/><circle cx="16" cy="7.5" r="2.5"/><circle cx="10" cy="16.5" r="2.5"/></svg>配置策略</b><span>根据自身需求，配置报价、成色、型号等采购策略。</span></div>
+            <div class="fstep"><span class="no">STEP 4</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="6.5" width="11" height="11" rx="2.5"/><path d="M12 3v3.5M12 17.5V21M3 12h3.5M17.5 12H21"/><circle cx="12" cy="12" r="2.2"/></svg>AI智采</b><span>AI报价采购师根据策略，自主竞拍采货。</span></div>
+          </div>
+        </div>
+        <div class="fstep"><span class="no">STEP 5</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15.5 9.5c-.7-1-1.9-1.5-3.5-1.5-1.9 0-3 .9-3 2s1 1.7 3 2 3 .9 3 2-1.1 2-3 2c-1.6 0-2.8-.5-3.5-1.5"/></svg>竞得支付（手动）</b><span>竞得后按时效完成支付，平台安排发货</span></div>
+        <div class="fstep"><span class="no">STEP 6</span><b><svg class="fic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5V8z"/><path d="M3.5 8.5L12 13l8.5-4.5M12 13v9"/></svg>收货验收</b><span>与质检报告比对验收，24 小时内确认收货</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 规则要点 -->
+  <section id="pj-rules">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">06</span><span class="line"></span><span class="cat">RULES</span></div>
+        <h2>合作规则，提前了解<em>更安心</em></h2>
+      </div>
+      <div class="rules reveal">
+        <div class="rule-item"><span class="k">拍机保证金</span><span class="v">参与竞拍前需预充拍机保证金：暗拍场次 <b>2000 元起</b>、直拍场次 <b>10000 元起</b>（以场次页面要求为准），余额不足将无法出价；保证金不可抵扣货款，无风险可申请退回。</span></div>
+        <div class="rule-item"><span class="k">充值与到账</span><span class="v">钱包充值目前支持转账支付（7×24 小时），手续费 0.05% 且不低于 0.01 元，到账后<b>次日早 7 点</b>起可用——建议提前充值，避免错过场次。</span></div>
+        <div class="rule-item"><span class="k">交易服务费</span><span class="v">按结算金额阶梯收取（手机）：≤100 元<b>免收</b>；100-500 元 <b>8 元/台</b>；500-1500 元 <b>18 元/台</b>；1500-2500 元 <b>28 元/台</b>；2500 元以上 <b>38 元/台</b>。无入驻费、会员费、上架费；平板/手表/笔记本以页面公示为准。</span></div>
+        <div class="rule-item"><span class="k">发货服务费</span><span class="v">成交物品按台收取，手机 <b>8 元/台</b>；平台原因取消发货、或售后退货经审核复检通过的可退还，补差成交订单不退。</span></div>
+        <div class="rule-item"><span class="k">暗拍与直拍</span><span class="v">暗拍出价互不可见，按出价早晚、高低排名，<b>价高者得</b>；直拍专区 AI 报价师默认自动出价（需提前配置），可手动改价，未调整默认认可；直拍竞得后<b>默认不可取消订单</b>。</span></div>
+        <div class="rule-item"><span class="k">出价与改价</span><span class="v">竞价期间可不限次提交或修改出价，场次结束前随时改价；单场出价上限 <b>10 万元</b>，起拍价与加价规则由平台设置。</span></div>
+        <div class="rule-item"><span class="k">支付与取消</span><span class="v">竞得后请在时效内完成支付，逾期订单自动取消并扣除保证金；买家原因取消订单，按应结算金额 <b>2%</b> 罚款（最低 10 元，封顶 3000 元，求购类无封顶）。</span></div>
+        <div class="rule-item"><span class="k">确认收货</span><span class="v">签收后 <b>24 小时内</b>确认收货，超时系统自动确认；未签收自发货起 7 天自动确认；请按平台要求<b>录制拆包视频</b>作为售后举证依据（支持线下现场自提）。</span></div>
+        <div class="rule-item"><span class="k">售后流程</span><span class="v">确认收货后 <b>48 小时</b>验货期内有<b>一次</b>售后机会：与质检报告（非外观）不匹配可申请——在线审核（约 24 小时）→ 寄回运营中心复检 → 补差或退机；审核或复检未通过，<b>24 小时</b>内可申诉一次。</span></div>
+        <div class="rule-item"><span class="k">售后运费</span><span class="v">退货建议用平台系统叫顺丰/京东，运费由平台垫付；复检确认可补差/退货的，运费由平台承担；售后失败退回的运费由买家承担。</span></div>
+        <div class="rule-item"><span class="k">隐私清除</span><span class="v">平台会对物品隐私数据进行清除，收到货后仍请再次清除；不得利用用户隐私非法牟利，由此产生的损失与纠纷由买家承担。</span></div>
+        <div class="rule-item"><span class="k">发票与支付</span><span class="v">可开具增值税普通发票（默认服务费类）；第三方卖家物品的开票需求请通过平台客服与卖家协商；须使用<b>本人实名账户</b>支付，绑定他人账户的资金损失自负。</span></div>
+      </div>
+      <p class="risk-note">相关完整规则以壹准拍机小程序内最新公示版本为准。</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="pj-join">
+    <div class="wrap reveal">
+      <div class="join-card">
+        <div class="qr-box" aria-label="壹准拍机小程序码">
+          <img src="assets/qr-pj.jpg" alt="壹准拍机小程序码" loading="lazy">
+        </div>
+        <div>
+          <h3>开通壹准拍机</h3>
+          <p class="sub">扫码进入壹准拍机小程序，点击“点击注册”。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div><!-- /view-paiji -->
+
+<!-- ================================================================
+     ④ 壹准bot速收 · 流量主招募子页 view-sushou（v0.11.18 起整页隐藏：无任何入口、?biz=sushou 回退聚合页，待正式内容就绪后恢复）
+================================================================ -->
+<div id="view-sushou" hidden>
+  <header class="hero">
+    <div class="hero-in">
+      <span class="hero-badge h-anim"><span class="dot"></span>壹准bot速收 · 流量主合作（绿怡科技旗下）</span>
+      <h1 class="h-anim d1">把「回收就像点外卖」的生意<br><em>变成你的推广收益</em></h1>
+      <p class="hero-sub h-anim d2"><!-- 主标语占位：现用方向性文案，待定稿 -->壹准bot速收：外卖式上门回收二手手机，机器人验机、全球竞价。现面向本地流量角色招募流量主，分享回收生意的高速增长。</p>
+      <div class="hero-btns h-anim d3">
+        <a class="btn btn-green" href="#ss-join">成为流量主</a>
+        <a class="btn btn-ghost" href="#ss-why">了解业务</a>
+      </div>
+      <p class="hero-note h-anim d4">收益说明均为规则示意，具体以官方合作政策为准</p>
+    </div>
+  </header>
+
+  <section><div class="wrap reveal">
+    <div class="grid grid-4" data-stagger>
+      <div class="card reveal"><span class="big-no">6省10城</span><h3>服务覆盖</h3><p>鲁/皖/浙/苏/粤/冀</p></div>
+      <div class="card reveal"><span class="big-no">双端</span><h3>小程序覆盖</h3><p>微信 + 支付宝</p></div>
+      <div class="card reveal"><span class="big-no">3min</span><h3>机器人验机</h3><p>单台标准质检</p></div>
+      <div class="card reveal"><span class="big-no">10-15%</span><h3>流量推广激励池</h3><p>口径待定</p></div>
+    </div>
+  </div></section>
+
+  <section id="ss-why">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">01</span><span class="line"></span><span class="cat">WHO</span></div>
+        <h2>谁适合成为壹准bot速收流量主</h2>
+        <p class="sec-desc">手里有本地流量、身边有换机需求，就能把影响力变成持续收益。</p>
+      </div>
+      <div class="grid grid-4" data-stagger>
+        <div class="card reveal"><span class="big-no">A</span><h3>本地博主 / 自媒体</h3><p>短视频、社群等本地内容创作者。</p></div>
+        <div class="card reveal"><span class="big-no">B</span><h3>快递站点 / 骑手团队</h3><p>社区触点多，天然适合推广上门回收。</p></div>
+        <div class="card reveal"><span class="big-no">C</span><h3>通讯店老板</h3><p>店内有换机客流，回收是顺手的新增收益。</p></div>
+        <div class="card reveal"><span class="big-no">D</span><h3>社区团长等本地角色</h3><p>有社区信任，转化路径短。【名单可扩展，待确认】</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">02</span><span class="line"></span><span class="cat">WHY</span></div>
+        <h2>为什么这个生意好推广</h2>
+      </div>
+      <div class="grid grid-4" data-stagger>
+        <div class="card reveal"><span class="big-no">01</span><h3>机器人验机</h3><p>用户放心、流程标准，你推广起来没有售后包袱。</p></div>
+        <div class="card reveal"><span class="big-no">02</span><h3>外卖式回收</h3><p>下单即取、上门服务，体验好、天然易传播。</p></div>
+        <div class="card reveal"><span class="big-no">03</span><h3>全球竞价 · 高价收</h3><p>多渠道竞价让用户卖得更高，转化率高，推广不白费。</p></div>
+        <div class="card reveal"><span class="big-no">04</span><h3>双小程序覆盖</h3><p>微信 + 支付宝双端，覆盖 6 省 10 城，用户触达无门槛。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-idx"><span class="no">03</span><span class="line"></span><span class="cat">POLICY</span></div>
+        <h2>合作政策（简化版）</h2>
+      </div>
+      <div class="ph reveal" style="min-height:200px">
+        <span class="ph-tag">大占位 · 等你补充</span>
+        <p style="max-width:440px">资料中仅有线索：「预留流量推广激励（10-15%）分配给流量主」。<br>
+        需补充：① 佣金/分润比例对外口径　② 结算方式（周期/渠道）　③ 订单归属绑定规则　④ 有无任务/考核要求</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ss-join">
+    <div class="wrap reveal">
+      <div class="join-card">
+        <div class="qr-box" aria-label="流量主入驻二维码占位">
+          <svg viewBox="0 0 33 33" shape-rendering="crispEdges"><rect width="33" height="33" fill="#fff"/><path fill="#0b1021" d="M0 0h7v7H0zM26 0h7v7h-7zM0 26h7v7H0zM2 2h3v3H2zM28 2h3v3h-3zM2 28h3v3H2zM9 1h2v1H9zM13 0h2v2h-2zM17 1h3v1h-3zM22 0h1v2h-1zM9 3h1v2H9zM12 2h2v3h-2zM16 2h2v1h-2zM0 9h1v2H0zM3 9h3v1H3zM0 13h2v1H0zM2 12h3v2H2zM6 13h1v2H6zM8 9h2v2H8zM11 9h3v1h-3zM15 10h2v2h-2zM18 9h2v1h-2zM21 9h3v2h-3zM25 9h2v1h-2zM28 9h2v3h-2zM31 10h2v2h-2zM10 11h1v3h-1zM12 12h2v2h-2zM19 12h1v3h-1zM23 11h2v3h-2zM26 13h3v1h-3zM0 17h2v2H0zM3 17h1v2H3zM5 16h2v2H5zM8 17h2v2H8zM11 16h3v2h-3zM15 17h2v1h-2zM18 16h1v3h-1zM20 17h3v2h-3zM24 16h2v2h-2zM27 17h2v2h-2zM30 16h3v2h-3zM1 21h2v2H1zM4 20h2v1H4zM7 21h3v2H7zM11 20h2v2h-2zM14 21h2v2h-2zM17 20h2v1h-2zM20 21h3v2h-3zM24 20h1v3h-1zM26 21h2v1h-2zM29 20h2v2h-2zM32 21h1v2h-1zM9 24h2v2H9zM12 24h1v2h-1zM14 23h3v2h-3zM18 24h2v2h-2zM21 23h2v2h-2zM24 24h3v2h-3zM28 23h2v3h-2zM31 24h2v2h-2zM10 28h2v2h-2zM13 27h2v2h-2zM16 28h3v2h-3zM20 27h2v3h-2zM23 28h1v2h-1zM25 27h3v2h-3zM29 28h2v2h-2zM32 27h1v3h-1zM9 31h2v2H9zM13 30h2v3h-2zM17 31h2v2h-2zM20 31h3v2h-3zM25 30h2v3h-2zM28 31h3v2h-3z"/></svg>
+        </div>
+        <div>
+          <h3>成为壹准bot速收流量主</h3>
+          <p class="sub">扫码提交合作意向，或联系区域顾问详细了解政策。</p>
+          <div class="contact-rows">
+            <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.3 8.8 8.8 0 0 1-3.9-.9L3 20l1.2-4.2A8.1 8.1 0 0 1 3.5 11 8.4 8.4 0 0 1 12 3.3a8.4 8.4 0 0 1 9 8.2z"/></svg><span>【占位】流量主合作企微 / 联系方式待补充</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="risk-note">壹准bot速收为绿怡科技旗下壹准品牌业务（toC 回收平台，本页面向流量主招募）。收益数据仅为规则示意，以官方合作政策为准。</p>
+    </div>
+  </section>
+</div><!-- /view-sushou -->
+
+<!-- ================= 页脚 ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-bottom" style="margin-top:0;border-top:0;padding-top:0">
+      <span>© 2026 绿怡科技 · 壹准</span>
+      <span id="ver-tag">demo v0.11.18</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= 返回顶部（所有页面，下滑出现） ================= -->
+<button class="btop" id="btop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="返回顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<!-- ================= 拓客助手（入口隐藏：连点页面顶部 5 次唤出，v0.11.17） ================= -->
+<button class="scout-btn" id="scout-btn" onclick="openScout()" aria-label="拓客助手" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+</button>
+<div class="modal-mask" id="scout-mask" onclick="if(event.target===this)closeScout()">
+  <div class="modal" role="dialog" aria-label="拓客助手">
+    <button class="close" onclick="closeScout()" aria-label="关闭"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+    <h3>拓客助手 · 区域人员专用</h3>
+    <p class="sub">见什么人，发什么链接。点击复制，直接粘贴给客户。</p>
+    <div class="copy-row"><span class="name">聚合页（全部业务）<small>给三类业务都可能有兴趣的客户</small></span><button onclick="copyLink('')">复制</button></div>
+    <div class="copy-row"><span class="name">壹准保卖<small>只看出货 / 卖货的客户</small></span><button onclick="copyLink('baomai')">复制</button></div>
+    <div class="copy-row"><span class="name">壹准拍机<small>只找货源 / 采货的客户</small></span><button onclick="copyLink('paiji')">复制</button></div>
+    <!-- 速收流量主入口已隐藏（v0.11.18）：子页内容未定稿，待正式内容就绪后再恢复 -->
+    <p class="tip">说明：单业务链接打开后不含其他业务入口；此助手对普通访客不可见，区域人员连续点击页面顶部 5 次即可唤出。</p>
+  </div>
+</div>
+
+<div class="toast" id="toast">已复制</div>
+
+<script>
+/* ============ 路由：1 个网址 · 4 种形态 ============ */
+var BIZS = ['baomai','paiji']; /* sushou 已隐藏（v0.11.18）：?biz=sushou 回退聚合页，子页保留但无任何入口 */
+var BIZ_NAME = {baomai:'壹准保卖', paiji:'壹准拍机'};
+var BIZ_VIEW = {baomai:'view-baomai', paiji:'view-paiji'};
+var JOIN_ANCHOR = {home:'#join', baomai:'#bm-join', paiji:'#pj-join'};
+var params = new URLSearchParams(location.search);
+var biz = params.get('biz');
+var isSingle = BIZS.indexOf(biz) !== -1;
+
+function setupReveal(root){
+  var els = root.querySelectorAll('.reveal');
+  var reduceMotion = false;
+  try { reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+  if (reduceMotion || typeof IntersectionObserver === 'undefined'){
+    els.forEach(function(el){el.classList.add('in')}); return;
+  }
+  /* 级联：同一容器内的卡片依次浮现 */
+  root.querySelectorAll('[data-stagger]').forEach(function(box){
+    Array.prototype.forEach.call(box.children, function(child, i){
+      child.style.transitionDelay = Math.min(i * 90, 450) + 'ms';
+    });
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12, rootMargin:'0px 0px -6% 0px'});
+  els.forEach(function(el){io.observe(el)});
+}
+
+/* 首页四大业务：流程步进动画（对齐保卖 fd-* 时序：done保持常亮，全亮后同熄一拍再循环；横带间错峰启动） */
+document.querySelectorAll('[data-flow]').forEach(function(box, bi){
+  var steps = Array.prototype.slice.call(box.querySelectorAll('.hfstep'));
+  var arrs = Array.prototype.slice.call(box.querySelectorAll('.fs-arr, .fs-turn'));
+  if (!steps.length) return;
+  var reduce = false;
+  try { reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){}
+  if (reduce) return;
+  var i = -1; /* -1 = 全暗起手拍 */
+  function tick(){
+    if (i < 0){
+      steps.forEach(function(s){ s.classList.remove('on','done'); });
+      arrs.forEach(function(a){ a.classList.remove('lit'); });
+    } else {
+      steps.forEach(function(s,k){
+        s.classList.toggle('done', k < i);
+        s.classList.toggle('on', k === i);
+      });
+      arrs.forEach(function(a,k){ a.classList.toggle('lit', k < i); });
+    }
+    i++;
+    if (i > steps.length) i = -1; /* 走完：全暗一拍，再从头 */
+  }
+  setTimeout(function(){ tick(); setInterval(tick, 1500); }, bi * 380);
+});
+
+/* 拍机流程：模式切换（人工/AI智采），桌面端 Tab 隐藏、双链路常显 */
+document.querySelectorAll('.pf-tab').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.pf-tab').forEach(function(b){ b.classList.toggle('active', b === btn); });
+    var mode = btn.dataset.mode;
+    document.querySelectorAll('#pj-flow .pf-mode').forEach(function(m){
+      var on = m.dataset.mode === mode;
+      m.classList.toggle('active', on);
+      if (on) m.scrollTo({ left: 0, behavior: 'smooth' });
+    });
+  });
+});
+function fixNavCTA(key){
+  var cta = document.getElementById('nav-cta');
+  if (cta && JOIN_ANCHOR[key]) cta.setAttribute('href', JOIN_ANCHOR[key]);
+}
+
+if (isSingle){
+  /* B 类单业务模式：物理删除其他视图与聚合页 */
+  BIZS.forEach(function(b){
+    if (b !== biz){ var el = document.getElementById(BIZ_VIEW[b]); if (el) el.remove(); }
+  });
+  var ssView = document.getElementById('view-sushou'); if (ssView) ssView.remove(); /* 速收子页已下线（v0.11.18），单业务模式一并物理删除 */
+  var home = document.getElementById('view-home'); if (home) home.remove();
+  var view = document.getElementById(BIZ_VIEW[biz]);
+  view.hidden = false;
+  document.getElementById('nav-biz-badge').hidden = false;
+  document.getElementById('nav-biz-badge').textContent = BIZ_NAME[biz];
+  document.title = BIZ_NAME[biz] + ' · 壹准（绿怡科技旗下）';
+  fixNavCTA(biz);
+  setupReveal(view);
+  /* 直接从子页面进的：顶栏不显示，跟首页一致（v0.11.16），nav 保持 HTML 默认 hidden */
+} else {
+  /* 聚合模式：首页不显示顶栏（v0.11.14），进子页时由 openBiz 唤出 */
+  var navEl = document.querySelector('.nav');
+  if (navEl) navEl.hidden = true;
+  fixNavCTA('home');
+  setupReveal(document.getElementById('view-home'));
+}
+
+var currentSub = null;
+var navBar = document.querySelector('.nav');
+var navHomeBtn = document.getElementById('nav-home');
+function openBiz(b){
+  if (isSingle) return; /* 单业务模式不该有入口（保险丝） */
+  currentSub = b;
+  document.getElementById('view-home').hidden = true;
+  var v = document.getElementById(BIZ_VIEW[b]);
+  v.hidden = false;
+  document.title = BIZ_NAME[b] + ' · 壹准（绿怡科技旗下）';
+  fixNavCTA(b);
+  /* 从首页点进子页：唤出顶栏，只留「返回首页」（v0.11.15） */
+  if (navBar){ navBar.hidden = false; navBar.classList.add('home-entry'); }
+  if (navHomeBtn) navHomeBtn.hidden = false;
+  if (!v.dataset.revealed){ setupReveal(v); v.dataset.revealed = '1'; }
+  window.scrollTo({top:0, behavior:'auto'});
+}
+function goHome(e){
+  if (e) e.preventDefault();
+  if (isSingle || !currentSub){ window.scrollTo({top:0,behavior:'smooth'}); return; }
+  document.getElementById(BIZ_VIEW[currentSub]).hidden = true;
+  document.getElementById('view-home').hidden = false;
+  currentSub = null;
+  document.title = '壹准 · 用壹准AI生态平台，把二手生意重做一遍';
+  fixNavCTA('home');
+  /* 回首页：顶栏收回 */
+  if (navBar){ navBar.hidden = true; navBar.classList.remove('home-entry'); }
+  if (navHomeBtn) navHomeBtn.hidden = true;
+  window.scrollTo({top:0, behavior:'auto'});
+}
+
+/* ============ 阅读进度条 + 返回顶部 ============ */
+var progressBar = document.getElementById('progress');
+var btopBtn = document.getElementById('btop');
+window.addEventListener('scroll', function(){
+  var h = document.documentElement;
+  var max = h.scrollHeight - h.clientHeight;
+  progressBar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  if (btopBtn) btopBtn.classList.toggle('show', h.scrollTop > 600);
+}, {passive:true});
+
+/* ============ 拓客助手 ============ */
+function baseUrl(){ return location.origin + location.pathname; }
+function copyLink(b){
+  var url = baseUrl() + (b ? '?biz=' + b : '');
+  var done = function(){ toast('已复制：' + (b ? BIZ_NAME[b] : '聚合页')); };
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(done, function(){ fallbackCopy(url); done(); });
+  } else { fallbackCopy(url); done(); }
+}
+function fallbackCopy(text){
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); }catch(e){}
+  document.body.removeChild(ta);
+}
+function shareClean(){ copyLink(''); }
+function openScout(){
+  document.getElementById('scout-mask').classList.add('open');
+  var sb = document.getElementById('scout-btn'); if (sb) sb.hidden = false; /* 唤出后圆钮常驻，方便再次打开 */
+}
+function closeScout(){ document.getElementById('scout-mask').classList.remove('open'); }
+
+/* 隐藏入口：连续点击页面顶部区域 5 次（1.5s 内）唤出拓客助手（v0.11.17，原长按 Logo 已随 Logo 删除作废） */
+(function(){
+  var tapCount = 0, tapTimer = null;
+  document.addEventListener('click', function(e){
+    /* 顶部 64px 热区；排除按钮/链接/输入等交互元素与弹窗内部 */
+    if (e.clientY > 64 || e.target.closest('a,button,input,select,textarea,.modal-mask,.scout-btn')) return;
+    tapCount++;
+    clearTimeout(tapTimer);
+    if (tapCount >= 5){
+      tapCount = 0;
+      openScout();
+      toast('拓客助手已唤出');
+    } else {
+      tapTimer = setTimeout(function(){ tapCount = 0; }, 1500);
+    }
+  });
+})();
+
+var toastTimer = null;
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+}
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeScout(); });
+</script>
+</body>
+</html>
