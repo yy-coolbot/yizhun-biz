@@ -1969,7 +1969,7 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
   <div class="wrap">
     <div class="foot-bottom" style="margin-top:0;border-top:0;padding-top:0">
       <span>© 2026 绿怡科技 · 壹准</span>
-      <span id="ver-tag">demo v0.11.19</span>
+      <span id="ver-tag">demo v0.11.20</span>
     </div>
   </div>
 </footer>
@@ -2108,6 +2108,7 @@ function openBiz(b){
   if (navBar){ navBar.hidden = false; navBar.classList.add('home-entry'); }
   if (navHomeBtn) navHomeBtn.hidden = false;
   if (!v.dataset.revealed){ setupReveal(v); v.dataset.revealed = '1'; }
+  equalizeFix(); /* 子页由隐藏转可见，解法块等高需重测（v0.11.20） */
   window.scrollTo({top:0, behavior:'auto'});
 }
 function goHome(e){
@@ -2134,6 +2135,8 @@ function equalizeFix(){
       var fa = cards[i].querySelector('.fix'), fb = cards[i+1].querySelector('.fix');
       if (!fa || !fb) continue;
       fa.style.minHeight = ''; fb.style.minHeight = '';
+      /* 子页隐藏时 offsetHeight=0，量了也白量（v0.11.20 踩坑修复），跳过 */
+      if (!fa.offsetHeight || !fb.offsetHeight) continue;
       var h = Math.max(fa.offsetHeight, fb.offsetHeight);
       fa.style.minHeight = h + 'px'; fb.style.minHeight = h + 'px';
     }
