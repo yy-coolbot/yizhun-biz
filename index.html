@@ -358,6 +358,14 @@ h2 em{font-style:normal;color:#7ab5ff}
 .rule-item .v{font-size:13.5px;color:var(--muted)}
 .rule-item .v .ph-inline{color:#7ab5ff;border-bottom:1px dashed var(--primary-line)}
 .rules-tail{padding:14px 26px;font-size:12px;color:var(--faint);background:rgba(255,255,255,.015)}
+/* 规则亮点条：一眼抓重点（v0.11.22） */
+.rule-hero{display:flex;align-items:flex-start;gap:14px;padding:20px 26px;
+  background:rgba(0,111,255,.14);border-bottom:1px solid var(--border)}
+.rule-hero .rh-badge{flex:none;width:34px;height:34px;border-radius:10px;background:var(--primary);
+  display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:#fff;margin-top:1px}
+.rule-hero .rh-big{font-size:17px;font-weight:800;color:#fff;letter-spacing:.3px}
+.rule-hero .rh-big em{font-style:normal;color:#7ab5ff}
+.rule-hero .rh-sub{font-size:12.5px;color:var(--faint);margin-top:5px;line-height:1.65}
 
 /* ============ 占位块 ============ */
 .ph{border:1.5px dashed rgba(0,111,255,.45);border-radius:var(--radius);background:rgba(0,111,255,.05);
@@ -708,6 +716,9 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
   .flow,.flow.f4,.flow.f5{grid-template-columns:repeat(2,1fr)}
   .fstep::after{display:none}
   .rule-item{grid-template-columns:1fr;gap:6px;padding:18px 20px}
+  .rule-hero{padding:16px 20px;gap:12px}
+  .rule-hero .rh-big{font-size:15.5px}
+  .rule-hero .rh-badge{width:30px;height:30px;font-size:15px}
   .join-card{grid-template-columns:1fr;justify-items:center;text-align:center}
   .join-card .contact-rows{align-items:center}
   .sec-head{margin-bottom:34px}
@@ -1364,13 +1375,20 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
         <p class="sec-desc">关键要点整理如下，有疑问可随时咨询确认。</p>
       </div>
       <div class="rules reveal">
+        <div class="rule-hero">
+          <div class="rh-badge">✓</div>
+          <div>
+            <div class="rh-big">交易成功，质检服务费<em>全免</em></div>
+            <div class="rh-sub">仅商家主动取消订单、或因商家原因交易失败退回货品时，按 5 元/台 收取——详见下方「质检服务费」。</div>
+          </div>
+        </div>
         <div class="rule-item"><span class="k">交易服务费</span><span class="v">竞价拍机渠道<b>暂免</b>；第三方同售渠道待开通后另行公布。</span></div>
         <div class="rule-item"><span class="k">质检服务费</span><span class="v">交易成功<b>免收</b>。仅商家主动取消订单、或因商家原因交易失败退回货品时，按 <b>5 元/台</b> 收取。</span></div>
         <div class="rule-item"><span class="k">业务保证金</span><span class="v">交易前商家账户需<b>足额缴纳业务保证金</b>（有补贴或免除政策的情况除外）；违规罚款等平台有权从账户余额中直接扣除。</span></div>
-        <div class="rule-item"><span class="k">报告与复检</span><span class="v">运营中心签收后 <b>48 小时内</b>出具检测报告及参考回收价；有异议可在 <b>24 小时内申请复检 1 次</b>（48 小时内审核，通过即更新报告与实时价格）；检测不通过可 24 小时内发起申诉，由平台介入裁决。</span></div>
+        <div class="rule-item"><span class="k">报告与复检</span><span class="v">壹准二手机中心签收后 <b>48 小时内</b>出具检测报告及参考回收价；有异议可在 <b>24 小时内申请复检 1 次</b>（48 小时内审核，通过即更新报告与实时价格）；检测不通过可 24 小时内发起申诉，由平台介入裁决。</span></div>
         <div class="rule-item"><span class="k">确认时效与库龄</span><span class="v">报告出具后 <b>15 天内</b>确认出售（竞价拍机 / 第三方同售，售价可参考检测价调整），或终止交易退回；库龄超 20 天平台定时提醒，超 <b>60 天</b>未确认的，平台有权按上拍当天参考价自动上拍，跌价损失由商家承担。</span></div>
         <div class="rule-item"><span class="k">隐私清除</span><span class="v">隐私清理<b>不在质检范围内</b>：寄出前请自行清除照片/聊天记录、退出账号与全部密码、取出 SIM 卡和存储卡；未清除导致的纠纷由商家承担，相关卡体平台将统一拆除销毁。</span></div>
-        <div class="rule-item"><span class="k">发货规范与留证</span><span class="v">寄往运营中心的运费由商家承担；需按规范打包（气泡膜+纸箱+订单号+防水膜）、在平台创建发货单，快递手机号须与注册手机号一致；发货前请留存机器外观、IMEI、功能测试视频等<b>证据</b>，产生争议时供平台核验。竞价拍机售出的订单，发往买家的运费由<b>买家承担</b>，商家不用出。</span></div>
+        <div class="rule-item"><span class="k">发货规范与留证</span><span class="v">寄往壹准二手机中心的运费由商家承担；需按规范打包（气泡膜+纸箱+订单号+防水膜）、在平台创建发货单，快递手机号须与注册手机号一致；发货前请留存机器外观、IMEI、功能测试视频等<b>证据</b>，产生争议时供平台核验。竞价拍机售出的订单，发往买家的运费由<b>买家承担</b>，商家不用出。</span></div>
         <div class="rule-item"><span class="k">禁卖与有责退货</span><span class="v">山寨机、丢失模式机、序列号异常机、监管机、有 ID/有锁机等<b>禁止交易</b>，发现即拒收退回（运费商家承担）；拆修机、虚假发货等问题属「商家有责退货」，须无条件退货退款并承担相应平台运营成本。</span></div>
         <div class="rule-item"><span class="k">取消与退回</span><span class="v">售出前可申请取消保卖（质检服务费照扣）；退回运费由商家承担，默认运费到付，费用结算后约 2 个工作日内寄出。</span></div>
         <div class="rule-item"><span class="k">违规处罚</span><span class="v">一般违规 <b>50 元/单</b>起（虚假交易按订单金额 10%），严重违规 3 倍、极其严重违规 10 倍罚款；收到通知 <b>72 小时内</b>可申诉，超期视为接受处罚。</span></div>
@@ -1841,6 +1859,13 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
         <h2>合作规则，提前了解<em>更安心</em></h2>
       </div>
       <div class="rules reveal">
+        <div class="rule-hero">
+          <div class="rh-badge">✓</div>
+          <div>
+            <div class="rh-big"><em>0</em> 入驻费 · <em>0</em> 会员费 · <em>0</em> 上架费</div>
+            <div class="rh-sub">交易服务费按结算金额阶梯收取：≤100 元免收，最高 38 元/台（手机）——详见下方「交易服务费」。</div>
+          </div>
+        </div>
         <div class="rule-item"><span class="k">拍机保证金</span><span class="v">参与竞拍前需预充拍机保证金：暗拍场次 <b>2000 元起</b>、直拍场次 <b>10000 元起</b>（以场次页面要求为准），余额不足将无法出价；保证金不可抵扣货款，无风险可申请退回。</span></div>
         <div class="rule-item"><span class="k">充值与到账</span><span class="v">钱包充值目前支持转账支付（7×24 小时），手续费 0.05% 且不低于 0.01 元，到账后<b>次日早 7 点</b>起可用——建议提前充值，避免错过场次。</span></div>
         <div class="rule-item"><span class="k">交易服务费</span><span class="v">按结算金额阶梯收取（手机）：≤100 元<b>免收</b>；100-500 元 <b>8 元/台</b>；500-1500 元 <b>18 元/台</b>；1500-2500 元 <b>28 元/台</b>；2500 元以上 <b>38 元/台</b>。无入驻费、会员费、上架费；平板/手表/笔记本以页面公示为准。</span></div>
@@ -1849,7 +1874,7 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
         <div class="rule-item"><span class="k">出价与改价</span><span class="v">竞价期间可不限次提交或修改出价，场次结束前随时改价；单场出价上限 <b>10 万元</b>，起拍价与加价规则由平台设置。</span></div>
         <div class="rule-item"><span class="k">支付与取消</span><span class="v">竞得后请在时效内完成支付，逾期订单自动取消并扣除保证金；买家原因取消订单，按应结算金额 <b>2%</b> 罚款（最低 10 元，封顶 3000 元，求购类无封顶）。</span></div>
         <div class="rule-item"><span class="k">确认收货</span><span class="v">签收后 <b>24 小时内</b>确认收货，超时系统自动确认；未签收自发货起 7 天自动确认；请按平台要求<b>录制拆包视频</b>作为售后举证依据（支持线下现场自提）。</span></div>
-        <div class="rule-item"><span class="k">售后流程</span><span class="v">确认收货后 <b>48 小时</b>验货期内有<b>一次</b>售后机会：与质检报告（非外观）不匹配可申请——在线审核（约 24 小时）→ 寄回运营中心复检 → 补差或退机；审核或复检未通过，<b>24 小时</b>内可申诉一次。</span></div>
+        <div class="rule-item"><span class="k">售后流程</span><span class="v">确认收货后 <b>48 小时</b>验货期内有<b>一次</b>售后机会：与质检报告（非外观）不匹配可申请——在线审核（约 24 小时）→ 寄回壹准二手机中心复检 → 补差或退机；审核或复检未通过，<b>24 小时</b>内可申诉一次。</span></div>
         <div class="rule-item"><span class="k">售后运费</span><span class="v">退货建议用平台系统叫顺丰/京东，运费由平台垫付；复检确认可补差/退货的，运费由平台承担；售后失败退回的运费由买家承担。</span></div>
         <div class="rule-item"><span class="k">隐私清除</span><span class="v">平台会对物品隐私数据进行清除，收到货后仍请再次清除；不得利用用户隐私非法牟利，由此产生的损失与纠纷由买家承担。</span></div>
         <div class="rule-item"><span class="k">发票与支付</span><span class="v">可开具增值税普通发票（默认服务费类）；第三方卖家物品的开票需求请通过平台客服与卖家协商；须使用<b>本人实名账户</b>支付，绑定他人账户的资金损失自负。</span></div>
@@ -1969,7 +1994,7 @@ footer{margin-top:48px;padding:18px 0 calc(22px + env(safe-area-inset-bottom))}
   <div class="wrap">
     <div class="foot-bottom" style="margin-top:0;border-top:0;padding-top:0">
       <span>© 2026 绿怡科技 · 壹准</span>
-      <span id="ver-tag">v0.11.21</span>
+      <span id="ver-tag">v0.11.22</span>
     </div>
   </div>
 </footer>
