@@ -4,10 +4,10 @@ const BASE = 'file:///F:/workBuddy新数据库6.9/2026-09-21-17-02-58/yizhun-biz
 (async () => {
   const browser = await chromium.launch({ executablePath: EXE });
   const jobs = [
-    { biz: 'baomai', w: 1440, h: 900, out: 'shots/v0122-d-bm-rules.png' },
-    { biz: 'paiji', w: 1440, h: 900, out: 'shots/v0122-d-pj-rules.png' },
-    { biz: 'baomai', w: 390, h: 844, out: 'shots/v0122-m-bm-rules.png' },
-    { biz: 'paiji', w: 390, h: 844, out: 'shots/v0122-m-pj-rules.png' }
+    { biz: 'baomai', w: 1440, h: 900, out: 'shots/v0123-d-bm-rules.png' },
+    { biz: 'paiji', w: 1440, h: 900, out: 'shots/v0123-d-pj-rules.png' },
+    { biz: 'baomai', w: 390, h: 844, out: 'shots/v0123-m-bm-rules.png' },
+    { biz: 'paiji', w: 390, h: 844, out: 'shots/v0123-m-pj-rules.png' }
   ];
   for (const j of jobs) {
     const page = await browser.newPage({ viewport: { width: j.w, height: j.h } });
